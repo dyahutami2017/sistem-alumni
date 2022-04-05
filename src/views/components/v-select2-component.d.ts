@@ -1,0 +1,1 @@
+    declare module "v-select2-component";
