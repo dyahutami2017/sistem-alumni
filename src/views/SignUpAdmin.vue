@@ -35,13 +35,13 @@
               >
                 <div class="card card-plain">
                   <div class="pb-0 card-header bg-transparent mb-4">
-                    <h4 class="font-weight-bolder">Sign Up</h4>
+                    <h4 class="font-weight-bolder">Sign Up Halaman Admin</h4>
                     <p class="mb-0">
                       Lengkapi data diri berikut untuk buat akun
                     </p>
                   </div>
                   <div class="card-body">
-                    <form role="form" @submit.prevent="add_alumni">
+                    <form role="form" @submit.prevent="add">
                       <div class="mb-3">
                         <div class="input-group input-group-outline my-3">
                             <label class="form-label">Nama</label>
@@ -112,7 +112,7 @@ import axios from "axios";
 const body = document.getElementsByTagName("body")[0];
 
 export default {
-  name: "sign-up",
+  name: "sign-up-admin",
   components: {
     // Navbar,
     VmdButton,
@@ -146,15 +146,15 @@ export default {
     body.classList.add("bg-gray-100");
   },
   methods: {
-    add_alumni() {
+    add() {
       const url = "http://alumni.eduraya.co.id/api/register";
       let self = this;
       axios
         .post(url, this.register)
         .then(function (response) {
-          //console.log(response);
+          console.log(response);
           if (response.status === 201) {
-            self.$router.push("/form_profile/" + response.data.user.id);
+            self.$router.push("/admin/dashboard");
           }
         })
         .catch((error) => console.log(error));

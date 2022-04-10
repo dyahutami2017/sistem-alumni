@@ -9,7 +9,7 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="dashboard"
+          collapseRef="/admin/dashboard"
           navText="Dashboard"
         >
           <template v-slot:icon>
@@ -17,7 +17,7 @@
           </template>
         </sidenav-collapse>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
@@ -70,13 +70,13 @@
             <i class="material-icons-round opacity-10 fs-5">credit_card</i>
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
       <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="data_alumni"
+          collapseRef="/admin/data_alumni"
           navText="Data Alumni"
         >
           <template v-slot:icon>
@@ -89,8 +89,8 @@
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="data_user"
-          navText="Data User"
+          collapseRef="/admin/data_user"
+          navText="Manajemen User"
         >
           <template v-slot:icon>
             <i class="material-icons-round opacity-10 fs-5">table_view</i>
@@ -146,7 +146,7 @@
           ACCOUNT PAGES
         </h6>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
@@ -158,13 +158,13 @@
             <i class="material-icons-round opacity-10 fs-5">person</i>
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
       <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
           v-bind:collapse="false"
-          collapseRef="setting_account"
+          collapseRef="/admin/setting_account"
           navText="Pengaturan Akun"
         >
           <template v-slot:icon>
@@ -206,7 +206,7 @@
 import SidenavCollapse from "./SidenavCollapse.vue";
 
 export default {
-  name: "SidenavList",
+  name: "sidenav-list",
   props: {
     cardBg: String,
   },

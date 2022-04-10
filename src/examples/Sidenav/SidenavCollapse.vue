@@ -54,8 +54,8 @@ export default {
   },
   methods: {
     getRoute() {
-      const routeArr = this.$route.path.split("/");
-      return routeArr[1];
+      const routeArr = this.$route.path;
+      return routeArr;
     },
   },
 };

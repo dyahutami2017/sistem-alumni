@@ -30,25 +30,34 @@
       </a>
     </div>
     <hr class="horizontal light mt-0 mb-2" />
-    <sidenav-list />
+    <sidenav-list v-if="role === 'admin'" />
+    <sidenav-list-alumni v-else />
   </aside>
 </template>
 <script>
-import SidenavList from "./SidenavListAlumni.vue";
+import SidenavListAlumni from "./SidenavListAlumni.vue";
+import SidenavList from "./SidenavList.vue";
 import logo from "@/assets/img/logo-uns.png";
 import logoDark from "@/assets/img/logo-ct-dark.png";
 
 export default {
   name: "index",
   components: {
+    SidenavListAlumni,
     SidenavList,
   },
   data() {
     return {
       logo,
       logoDark,
+      role: "",
     };
   },
   props: ["custom_class"],
+  mounted() {
+    var currentUrl = window.location.pathname;
+    var url_first = currentUrl.split("/");
+    this.role = url_first[1];
+  },
 };
 </script>

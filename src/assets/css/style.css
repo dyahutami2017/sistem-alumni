@@ -1,0 +1,51 @@
+#print_kartu {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
+  .top-first {
+    position: absolute;
+    top: 18%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-second {
+    position: absolute;
+    top: 21%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-third {
+    position: absolute;
+    top: 24%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-fourth {
+    position: absolute;
+    top: 27%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-fifth {
+    position: absolute;
+    top: 30%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-sixth {
+    position: absolute;
+    top: 33%;
+    left: 250px;
+    text-align: center;
+  }
+  .top-seventh {
+    position: absolute;
+    top: 38%;
+    left: 250px;
+    text-align: center;
+  }
+  p{
+      color: red;
+  }

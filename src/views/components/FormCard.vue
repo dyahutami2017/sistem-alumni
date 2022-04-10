@@ -4,21 +4,21 @@
     <div class="card-body px-0 pb-2">
       <form v-on:submit.prevent="submit">
         <div class="row p-4">
-          <div class="col-4 mb-3">
-            <img style="width:300px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80">
+          <div class="col-2 mb-3">
+            <img src="/img/ava.1b72e298.jpg" style="width:100%">
           </div>
           <div class="col-8 mb-3">
-            <h6>Richard Davis</h6>
-            <h6>alecthompson@mail.com</h6>
-            <ul>
+            <h6>{{profil.name}}</h6>
+            <h6>{{profil.email}}</h6>
+            <!-- <ul>
               <li>Sudah Terverfikasi</li>
               <li>Data sudah Lengkap</li>
-            </ul>
+            </ul> -->
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="col-12">Nama Lengkap</label><br/>
-              <input type="text" class="form-control" v-model="profil.nama" name="nama" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.name" name="name" isrequired="true">
             </div>
           </div>
           <div class="col-4">
@@ -48,32 +48,32 @@
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Tempat Lahir</label><br/>
-              <input type="text" class="form-control" v-model="profil.tempat_lahir" name="tempat_lahir" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.birth_place" name="birth_place" isrequired="true">
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Tanggal Lahir</label><br/>
-              <input type="date" class="form-control" v-model="profil.tanggal_lahir" name="tanggal_lahir" isrequired="true">
+              <input type="date" class="form-control" v-model="profil.birth_date" name="birth_date" isrequired="true">
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Tahun Masuk</label><br/>
-              <input type="text" class="form-control" v-model="profil.tahun_masuk" name="tahun_masuk" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.entry_year" name="entry_year" isrequired="true">
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Tahun Lulus</label><br/>
-              <input type="text" class="form-control" v-model="profil.tahun_lulus" name="tahun_lulus" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.graduate_year" name="graduate_year" isrequired="true">
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Fakultas</label><br/>
               <div class="col-12">
-                  <Select2 v-model="myValue" :options="myOptions" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                  <Select2 v-model="profil.faculty" :options="myOptions" />
               </div>
             </div>
           </div>
@@ -81,14 +81,14 @@
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Jurusan</label><br/>
               <div class="col-12">
-                  <Select2 v-model="myValue2" :options="myOptions2" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                  <Select2 v-model="profil.departement" :options="myOptions2" />
               </div>
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">No.Hp</label><br/>
-              <input type="text" class="form-control" v-model="profil.no_hp" name="no_hp" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.phone_number" name="phone_number" isrequired="true">
             </div>
           </div>
           <div class="col-4">
@@ -99,16 +99,21 @@
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
-              <label class="label col-12">Provinsi</label><br/>
+              <label class="label col-12">Jenis Kelamin</label><br/>
               <div class="col-12">
-                  <Select2 v-model="myValue3" :options="myOptions3" @change="myChangeEvent($event)" @select="mySelectEvent($event)" />
+                <select name="gender" id="gender" class="form-control" v-model="profil.gender">
+                  <option value="">Pilih Jenis Kelamin</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select> 
+                  <!-- <Select2 v-model="profil.Provinsi" :options="myOptions3" @change="myChangeEvent($event)" @select="mySelectEvent($event)" /> -->
               </div>
             </div>
           </div>
           <div class="col-4">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Alamat Tinggal</label><br/>
-              <input type="text" class="form-control" v-model="profil.alamat" name="alamat" isrequired="true">
+              <input type="text" class="form-control" v-model="profil.address" name="address" isrequired="true">
             </div>
           </div>
           <div class="col-4">
@@ -129,6 +134,7 @@
               <input type="file" class="form-control" name="ijazah" isrequired="true">
             </div>
           </div>
+          <div class="col-8"></div>
           <div class="col-2">
             <vmd-button
                 class="my-4 mb-2"
@@ -157,7 +163,7 @@
 /* eslint-disable */
 import Select2 from 'vue3-select2-component';
 import VmdButton from "@/components/VmdButton.vue";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "form-card",
@@ -169,57 +175,78 @@ export default {
         return {
             myValue: 'Pilih Fakultas',
             myValue2: 'Pilih Jurusan',
-            myValue3: 'Pilih Provinsi',
+            // myValue3: 'Pilih Provinsi',
             myOptions: ['Pilih Fakultas','Teknik', 'Bahasa dan Seni', 'MIPA', 'Ekonomi', 'Ilmu Sosial'],
             myOptions2: ['Pilih Jurusan','Teknik Informatika', 'Teknik Mesin', 'Seni Rupa', 'Ekonomi Bisnis', 'Pendidikan Ilmu Sosial'],
-            myOptions3: ['Pilih Provinsi','Aceh', 'Bandung', 'Jakarta', 'DI Yogyakarta', 'Jawa Tengah'], // or [{id: key, text: value}, {id: key, text: value}]
+            // myOptions3: ['Pilih Provinsi','Aceh', 'Bandung', 'Jakarta', 'DI Yogyakarta', 'Jawa Tengah'], // or [{id: key, text: value}, {id: key, text: value}]
             //optionFakultas: [],
             profil:{
-                nama:'',
+                name:'',
                 gelar_depan:'',
                 gelar_belakang:'',
                 nim:'',
                 nik:'',
-                tempat_lahir:'',
-                tanggal_lahir:'',
-                tahun_masuk:'',
-                tahun_lulus:'',
-                no_hp:'',
-                alamat:'',
+                birth_place:'',
+                birth_date:'',
+                entry_year:'',
+                graduate_year:'',
+                phone_number:'',
+                address:'',
+                email:'',
+                faculty:'',
+                departement:'',
+                gender:'',
             }
         }
     },
+    mounted() {
+      this.load();
+    },
     methods: {
-        // getFakultas(e) {
-        //   axios.get("url").then(({data}) => {
-        //     this.optionFakultas = data
-        //   }).catch(err => {
-        //     console.log(err)
-        //   })
-        //     console.log(e)
-        // },
-        myChangeEvent(val){
-            console.log(val);
-        },
-        mySelectEvent({id, text}){
-            console.log({id, text})
-        },
-        submit(){
-            this.$emit('save-profil', this.profil)
-            this.profil = {
-                nama:'',
-                gelar_depan:'',
-                gelar_belakang:'',
-                nim:'',
-                nik:'',
-                tempat_lahir:'',
-                tanggal_lahir:'',
-                tahun_masuk:'',
-                tahun_lulus:'',
-                no_hp:'',
-                alamat:'',
-            }
-            console.log('ok')
+      load(){
+          axios.get('http://alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          this.profil.name = res.data.user.name 
+          this.profil.nim = res.data.user.nim 
+          this.profil.nik = res.data.user.nik 
+          this.profil.birth_place = res.data.user.birth_place 
+          this.profil.birth_date = res.data.user.birth_date 
+          this.profil.entry_year = res.data.user.entry_year 
+          this.profil.graduate_year = res.data.user.graduate_year 
+          this.profil.phone_number = res.data.user.phone_number 
+          this.profil.address = res.data.user.address 
+          this.profil.email = res.data.user.email
+          if(res.data.user.faculty == null || res.data.user.faculty == ''){
+            this.profil.faculty = 'Pilih Fakultas'
+          }
+          else{
+            this.profil.faculty = res.data.user.faculty  
+          }
+          if(res.data.user.departement == null || res.data.user.departement == ''){
+            this.profil.departement = 'Pilih Jurusan'
+          }
+          else{
+            this.profil.departement = res.data.user.departement  
+          }
+          if(res.data.user.gender == null || res.data.user.gender == ''){
+            this.profil.gender = ''
+          }
+          else{
+            this.profil.gender = res.data.user.gender  
+          }
+        }).catch ((err) => {
+          console.log(err);
+        })
+      },
+      submit(){
+        this.$emit('save-profil', this.profil)
+        const url = "http://alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
+        axios
+          .put(url, this.profil)
+          .then(function (response) {
+            console.log(response)
+            alert(response.data.messege)
+          })
+          .catch((error) => alert(error));
         }
     }
   

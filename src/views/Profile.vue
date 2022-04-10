@@ -11,7 +11,7 @@
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n8">
       <div class="row gx-4">
-        <div class="col-auto">
+        <!-- <div class="col-auto">
           <div class="avatar avatar-xl position-relative">
             <img
               src="@/assets/img/bruce-mars.jpg"
@@ -24,7 +24,7 @@
           <div class="h-100">
             <h5 class="mb-1">Richard Davis</h5>
           </div>
-        </div>
+        </div> -->
         <div
           class="mx-auto mt-3 col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0"
         >
@@ -78,7 +78,7 @@
                     <h6 class="mb-0">Informasi Profil</h6>
                   </div>
                   <div class="col-4 text-end">
-                    <a href="/form">
+                    <a :href="link">
                       <i
                         class="text-sm fas fa-user-edit text-secondary"
                         data-bs-toggle="tooltip"
@@ -94,7 +94,7 @@
                   <table class="table table-borderless align-items-center">
                     <tr>
                       <td width="200px">Nama Lengkap</td>
-                      <td><strong class="text-dark">{{request.nama}}</strong></td>
+                      <td><strong class="text-dark">{{request.name}}</strong></td>
                     </tr>
                     <tr>
                       <td width="200px">NIM</td>
@@ -102,20 +102,24 @@
                     </tr>
                     <tr>
                       <td width="200px">NIK</td>
-                      <td><strong class="text-dark">{{request.nik}}}</strong></td>
+                      <td><strong class="text-dark">{{request.nik}}</strong></td>
                     </tr>
                     <tr>
                       <td width="200px">Tempat Lahir</td>
-                      <td><strong class="text-dark">{{request.tempat_lahir}}</strong></td>
+                      <td><strong class="text-dark">{{request.birth_place}}</strong></td>
                     </tr>
                     <tr>
                       <td width="200px">Tanggal Lahir</td>
-                      <td><strong class="text-dark">{{request.tanggal_lahir}}</strong></td>
+                      <td><strong class="text-dark">{{request.birth_date}}</strong></td>
+                    </tr>
+                    <tr>
+                      <td width="200px">Jenis Kelamin</td>
+                      <td><strong class="text-dark">{{request.gender}}</strong></td>
                     </tr>
                     <tr>
                       <td width="200px">No. Hp</td>
                       <td>
-                        <strong class="text-dark">{{request.no_hp}}</strong>
+                        <strong class="text-dark">{{request.phone_number}}</strong>
                       </td>
                     </tr>
                     <tr>
@@ -127,37 +131,31 @@
                     <tr>
                       <td width="200px">Alamat</td>
                       <td>
-                        <strong class="text-dark">{{request.alamat}}</strong>
+                        <strong class="text-dark">{{request.address}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Fakultas</td>
                       <td>
-                        <strong class="text-dark">{{request.fakultas}}</strong>
+                        <strong class="text-dark">{{request.faculty}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Jurusan</td>
                       <td>
-                        <strong class="text-dark">{{request.jurusan}}</strong>
+                        <strong class="text-dark">{{request.departement}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Tahun Masuk</td>
                       <td>
-                        <strong class="text-dark">{{request.tahun_masuk}}</strong>
+                        <strong class="text-dark">{{request.entry_year}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Tahun Lulus</td>
                       <td>
-                        <strong class="text-dark">{{request.tahun_lulus}}</strong>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td width="200px">Paska Kampus</td>
-                      <td>
-                        <strong class="text-dark">{{request.paska_kampus}}</strong>
+                        <strong class="text-dark">{{request.graduate_year}}</strong>
                       </td>
                     </tr>
                   </table>
@@ -166,11 +164,11 @@
               <div class="p-3 card-body" id="show_dokumen">
                 <div class="mb-3">
                   <h6>KTP</h6>
-                  <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt="">
+                  <!-- <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt=""> -->
                 </div>
                 <div>
                   <h6>Ijazah</h6>
-                  <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt="">
+                  <!-- <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt=""> -->
                 </div>
               </div>
             </div>
@@ -182,6 +180,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import sophie from "@/assets/img/kal-visuals-square.jpg";
 import marie from "@/assets/img/marie.jpg";
 import ivana from "@/assets/img/ivana-square.jpg";
@@ -198,6 +197,7 @@ import team4 from "@/assets/img/team-4.jpg";
 import $ from "jquery";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
+import axios from "axios";
 
 export default {
   name: "profile-overview",
@@ -216,25 +216,50 @@ export default {
       team4,
       img2,
       img3,
+      link: '',
       request: {
-        nama: "Alec M. Thompson",
-        nim: "17520241018",
-        nik: "3401024590001",
-        tempat_lahir: "Sleman",
-        tanggal_lahir: "10 Januari 1997",
-        no_hp: "(44) 123 1234 123",
-        email: "alecthompson@mail.com",
-        fakultas: "Teknik",
-        jurusan: "Teknik Mesin",
-        tahun_masuk: "2010",
-        tahun_lulus: "2015",
-        paska_kampus: "Bekerja",
-        alamat: "Jalan Komarudin No 20",
+        name:'',
+        gelar_depan:'',
+        gelar_belakang:'',
+        nim:'',
+        nik:'',
+        birth_place:'',
+        birth_date:'',
+        entry_year:'',
+        graduate_year:'',
+        phone_number:'',
+        address:'',
+        email:'',
+        faculty:'',
+        departement:'',
+        gender:'',
       },
     };
   },
   components: {},
-
+  methods: {
+    load(){
+          axios.get('http://alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          this.request.name = res.data.user.name 
+          this.request.nim = res.data.user.nim 
+          this.request.nik = res.data.user.nik 
+          this.request.birth_place = res.data.user.birth_place 
+          this.request.birth_date = res.data.user.birth_date 
+          this.request.entry_year = res.data.user.entry_year 
+          this.request.graduate_year = res.data.user.graduate_year 
+          this.request.phone_number = res.data.user.phone_number 
+          this.request.address = res.data.user.address 
+          this.request.email = res.data.user.email
+          this.request.faculty = res.data.user.faculty
+          this.request.departement = res.data.user.departement
+          this.request.gender = res.data.user.gender
+          this.link = '/form_profile/'+res.data.user.id
+          console.log(res.data)
+        }).catch ((err) => {
+          console.log(err);
+        })
+      },
+  },
   mounted() {
     this.$store.state.isAbsolute = true;
     setNavPills();
@@ -248,6 +273,7 @@ export default {
       $("#show_dokumen").show();
       $("#show_identitas").hide();
     });
+    this.load();
   },
   beforeUnmount() {
     this.$store.state.isAbsolute = false;

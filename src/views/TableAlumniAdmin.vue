@@ -145,9 +145,17 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="profil in alumnis" :key="profil.id">
+                  <tr v-for="alumni in alumnis" :key="alumni.id">
                     <td class="align-middle text-center">
                       <a
+                        href="javascript:;"
+                        class="badge bg-gradient-success"
+                        data-toggle="tooltip"
+                        data-original-title=""
+                      >
+                        <i class="fa fa-check"></i>
+                      </a>
+                      <!-- <a
                         v-if="profil.aktivasi === 'ya'"
                         href="javascript:;"
                         class="badge bg-gradient-success"
@@ -164,12 +172,30 @@
                         data-original-title=""
                       >
                         <i class="fa fa-check"></i>
-                      </a>
+                      </a> -->
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
                           <a
+                            href="javascript:;"
+                            class="badge badge-sm bg-gradient-primary mb-1"
+                            data-toggle="tooltip"
+                            data-original-title=""
+                          >
+                            <i class="fa fa-check"></i>
+                            Ijazah
+                          </a>
+                          <a
+                            href="javascript:;"
+                            class="badge badge-sm bg-gradient-info"
+                            data-toggle="tooltip"
+                            data-original-title=""
+                          >
+                            <i class="fa fa-check"></i>
+                            KTP
+                          </a>
+                          <!-- <a
                             v-if="profil.ijazah === 'ya'"
                             href="javascript:;"
                             class="badge badge-sm bg-gradient-primary mb-1"
@@ -188,7 +214,7 @@
                           >
                             <i class="fa fa-check"></i>
                             KTP
-                          </a>
+                          </a> -->
                         </div>
                       </div>
                     </td>
@@ -196,7 +222,7 @@
                       <div class="d-flex px-2 py-1">
                         <div>
                           <img
-                            v-bind:src="require('../assets/img/' + profil.img)"
+                            src="/img/ava.1b72e298.jpg"
                             class="avatar avatar-sm me-3 border-radius-lg"
                             alt="user1"
                           />
@@ -204,80 +230,80 @@
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm">
                             <a
-                              href="/profile"
+                              href="/profile/"
                             >
-                              {{ profil.nama }}
+                              {{ alumni.name }}
                             </a>
                           </h6>
                           <p class="text-xs text-secondary mb-0">
-                            {{ profil.email }}
+                            {{ alumni.email }}
                           </p>
                         </div>
                       </div>
                     </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0">
-                        {{ profil.nim }}
+                        {{ alumni.nim }}
                       </p>
                     </td>
                     <td class="align-middle text-left text-sm">
                       <p class="text-xs font-weight-bold mb-0">
-                        {{ profil.nik }}
+                        {{ alumni.nik }}
                       </p>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.jenis_kelamin }}
+                        {{ alumni.gender }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.tempat_lahir }}
+                        {{ alumni.birth_place }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.tanggal_lahir }}
+                        {{ alumni.birth_date }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.fakultas }}
+                        {{ alumni.faculty }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.jurusan }}
+                        {{ alumni.departement }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.no_hp }}
+                        {{ alumni.phone_number }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.alamat }}
+                        {{ alumni.address }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.tahun_masuk }}
+                        {{ alumni.entry_year }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.tahun_lulus }}
+                        {{ alumni.graduate_year }}
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.gelar_depan }}
+                        
                       </span>
                     </td>
                     <td class="align-middle text-center">
                       <span class="text-secondary text-xs font-weight-bold">
-                        {{ profil.gelar_belakang }}
+                        
                       </span>
                     </td>
                     <td class="align-middle">
@@ -324,6 +350,7 @@
 /* eslint-disable */
 import Select2 from 'vue3-select2-component';
 import VmdButton from "@/components/VmdButton.vue";
+import axios from "axios";
 // import $ from "jquery";
 
 export default {
@@ -331,9 +358,6 @@ export default {
   components: {
     Select2,
     VmdButton
-  },
-  props: {
-    alumnis: Array,
   },
   data() {
         return {
@@ -343,63 +367,20 @@ export default {
             optionsFakultas: ['Pilih Fakultas','Teknik', 'Bahasa dan Seni', 'MIPA', 'Ekonomi', 'Ilmu Sosial'],
             optionsJurusan: ['Pilih Jurusan','Teknik Informatika', 'Teknik Mesin', 'Seni Rupa', 'Ekonomi Bisnis', 'Pendidikan Ilmu Sosial'],
             optionsTahunLulus: ['Pilih Tahun','2022', '2021', '2020', '2019', '2018'], // or [{id: key, text: value}, {id: key, text: value}]
-            alumnis:[
-              {
-                id: 1,
-                aktivasi: 'ya',
-                img: 'team-4.jpg',
-                ijazah: 'ya',
-                ktp: 'ya',
-                nama: 'Johna Michael',
-                email: 'johna@gmail.com',
-                nim: '17520241018',
-                nik: '3401024590001',
-                jenis_kelamin: 'Perempuan',
-                tempat_lahir: 'Jakarta',
-                tanggal_lahir: '10 Januari 1997',
-                fakultas: 'Teknik',
-                jurusan: 'Teknik Sipil',
-                no_hp: '(44) 123 1234 123',
-                alamat: 'Jl. Elang I No. 5 Perum UNS IV Triyagan Mojolaban, Sukoharjo',
-                tahun_masuk: '2010',
-                tahun_lulus: '2015',
-                gelar_depan: '',
-                gelar_belakang: 'S.T',
-              },
-              {
-                id: 2,
-                aktivasi: 'tidak',
-                img: 'team-2.jpg',
-                ijazah: 'tidak',
-                ktp: 'ya',
-                nama: 'Alexa Liras',
-                email: 'johna@gmail.com',
-                nim: '17520241018',
-                nik: '3401024590001',
-                jenis_kelamin: 'Perempuan',
-                tempat_lahir: 'Jakarta',
-                tanggal_lahir: '10 Januari 1997',
-                fakultas: 'Teknik',
-                jurusan: 'Teknik Sipil',
-                no_hp: '(44) 123 1234 123',
-                alamat: 'Jl. Elang I No. 5 Perum UNS IV Triyagan Mojolaban, Sukoharjo',
-                tahun_masuk: '2010',
-                tahun_lulus: '2015',
-                gelar_depan: '',
-                gelar_belakang: 'S.T',
-              },
-            ],
+            alumnis:[],
           }
     },
     methods: {
-        myChangeEvent(val){
-            console.log(val);
-        },
-        mySelectEvent({id, text}){
-            console.log({id, text})
-        }
+        load(){
+          axios.get('http://alumni.eduraya.co.id/api/alumni').then(res => {
+            this.alumnis = res.data.user
+        }).catch ((err) => {
+          console.log(err);
+        })
+      }
     },
     mounted() {
+      this.load();
       // $('#tbl_alumni').hide();
       // $("#btnSimpan").click(function(e){
       //   e.preventDefault();

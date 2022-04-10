@@ -17,7 +17,7 @@
           class="pe-md-3 d-flex align-items-center"
           :class="this.$store.state.isRTL ? 'me-md-auto' : 'ms-md-auto'"
         >
-          <vmd-input label="Search here" />
+          <!-- <vmd-input label="Search here" /> -->
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
@@ -30,7 +30,7 @@
                 class="material-icons"
                 :class="this.$store.state.isRTL ? 'ms-sm-2' : 'me-sm-1'"
               >
-                account_circle
+                logout
               </i>
             </router-link>
           </li>
@@ -48,7 +48,7 @@
               </div>
             </a>
           </li>
-          <li class="px-3 nav-item d-flex align-items-center">
+          <!-- <li class="px-3 nav-item d-flex align-items-center">
             <a
               class="p-0 nav-link lh-1"
               @click="toggleConfigurator"
@@ -58,8 +58,8 @@
                 settings
               </i>
             </a>
-          </li>
-          <li
+          </li> -->
+          <!-- <li
             class="nav-item dropdown d-flex align-items-center"
             :class="this.$store.state.isRTL ? 'ps-2' : 'pe-2'"
           >
@@ -184,14 +184,14 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>
   </nav>
 </template>
 <script>
-import VmdInput from "@/components/VmdInput.vue";
+// import VmdInput from "@/components/VmdInput.vue";
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations } from "vuex";
 
@@ -215,7 +215,7 @@ export default {
   },
   components: {
     Breadcrumbs,
-    VmdInput,
+    // VmdInput,
   },
   computed: {
     currentRouteName() {

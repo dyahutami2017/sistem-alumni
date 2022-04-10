@@ -37,29 +37,56 @@
           </div>
         </div>
         <div v-else class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
             <mini-cards
-              title="Pendaftar"
-              value="150"
+              title="Data Profil Lengkap"
+              value="2"
               iconName="person"
               iconClass="text-white"
               iconBackground="bg-gradient-info"
             />
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
             <mini-cards
-              title="Teraktivasi"
-              value="138"
+              title="Data Tracer Study Lengkap"
+              value="1"
               iconName="person"
               iconClass="text-white"
               iconBackground="bg-gradient-success"
             />
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
             <mini-cards
               title="Data Alumni"
-              value="208"
+              value="6"
               iconName="person"
+              iconClass="text-white"
+              iconBackground="bg-gradient-warning"
+            />
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <mini-cards
+              title="Bekerja"
+              value="1"
+              iconName="work"
+              iconClass="text-white"
+              iconBackground="bg-gradient-info"
+            />
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <mini-cards
+              title="Melanjutkan"
+              value="0"
+              iconName="school"
+              iconClass="text-white"
+              iconBackground="bg-gradient-success"
+            />
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
+            <mini-cards
+              title="Wirausaha"
+              value="0"
+              iconName="storefront"
               iconClass="text-white"
               iconBackground="bg-gradient-warning"
             />
@@ -115,7 +142,7 @@ export default {
     return {
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
-      role: "alumni",
+      role: "admin",
     };
   },
   mounted() {
