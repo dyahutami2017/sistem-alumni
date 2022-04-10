@@ -6,49 +6,28 @@
         <div class="card">
           <div class="card-body">
             <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i></a>
-            <div id="print_kartu" style="font-size:18px;">
-              <img src="../assets/img/E-Kartu.png" alt="" style="width:80%">
-              <div class="top-first text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.name}}
+            <div id="print_kartu" style="font-size:14px">
+              <img src="../assets/img/kartu_alumni.png" alt="" style="width:90%">
+              <div class="top-first text-dark">
+                <span style="display:inline-block;  width:103px; text-align:left">Nama </span>: {{kartu.name}}
               </div>
-              <div class="top-second text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.nik}}
+              <div class="top-second text-dark">
+                <span style="display:inline-block;  width:103px; text-align:left">NIK </span>: {{kartu.nik}}
               </div>
-              <div class="top-third text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.nim}}
+              <div class="top-third text-dark">
+                <span style="display:inline-block;  width:103px; text-align:left">No Anggota </span>: {{kartu.nim}}
               </div>
-              <div class="top-fourth text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.birth_place}}, {{kartu.birth_date}}
+              <div class="top-fourth text-dark">
+                <span style="display:inline-block;  width:103px; text-align:left">TTL </span>: {{kartu.birth_place}}, {{kartu.birth_date}}
               </div>
-              <div class="top-fifth text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.faculty}}, {{kartu.departement}} -  S1
+              <div class="top-fifth text-dark">
+                <span style="display:inline-block;  width:100px; text-align:left">Fakultas/Prodi </span> : {{kartu.faculty}}, {{kartu.departement}} -  S1
               </div>
-              <div class="top-sixth text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.graduate_year}}
+              <div class="top-sixth text-dark">
+                <span style="display:inline-block;  width:100px; text-align:left">Lulus Tahun </span> : {{kartu.graduate_year}}
               </div>
-              <div class="top-seventh text-info">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>12 September 2022
-              </div>
-              <div class="qr_code">
-                <QRCodeVue3
-                  :value="val"
-                  :qrOptions="{ typeNumber: 0, mode: 'Byte', errorCorrectionLevel: 'H' }"
-                  :dotsOptions="{
-                    type: 'rounded',
-                    color: '#403DFF',
-                    gradient: {
-                      type: 'linear',
-                      rotation: 0,
-                      colorStops: [
-                        { offset: 0, color: '#403DFF' },
-                        { offset: 1, color: '#403DFF' },
-                      ],
-                    },
-                  }"
-                />
-              </div>
-              <div class="photo">
-                <img src="/img/ava.1b72e298.jpg" />
+              <div class="top-seventh text-dark">
+                <span style="display:inline-block;  width:103px; text-align:left">Kadaluarsa </span>: 12 September 2022
               </div>
             </div>
           </div>
@@ -61,19 +40,14 @@
 /* eslint-disable */
 import $ from "jquery";
 import axios from "axios";
-import QRCodeVue3 from "qrcode-vue3";
-
 export default {
   name: "kartu-alumni",
-  components: {
-    QRCodeVue3,
-  },
+  components: {},
   data() {
     return {
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
       role: "user",
-      val: "",
       kartu: {
         name: '',
         birth_place: '',
@@ -105,7 +79,6 @@ export default {
           this.kartu.nim = res.data.user.nim
           this.kartu.faculty = res.data.user.faculty
           this.kartu.departement = res.data.user.departement
-          this.val = res.data.user.nik
           console.log(res.data)
         }).catch ((err) => {
           console.log(err);
@@ -125,18 +98,13 @@ export default {
 				//Create a new HTML document.
 				frameDoc.document.write('<html><head><title></title>');
         frameDoc.document.write("<style> #print_kartu { position: relative; text-align: center; color: white;}");
-        frameDoc.document.write(".top-first { position: absolute; top: 14%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-second { position: absolute; top: 16%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-third { position: absolute; top: 18%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-fourth { position: absolute; top: 20%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-fifth { position: absolute; top: 22%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-sixth { position: absolute; top: 24%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".top-seventh { position: absolute; top: 28%; left: 80px; text-align: center; font-size:12px }");
-        frameDoc.document.write(".qr_code { position: absolute; top: 43%; left: 180px; text-align: center;}");
-        frameDoc.document.write(".qr_code img { width:220px; height:220px }");
-        frameDoc.document.write(".photo { position: absolute; top: 150px; right: 170px; text-align: center;}");
-        frameDoc.document.write(".photo img { width:160px;}");
-        frameDoc.document.write(".text-info { color:#403DFF;}");
+        frameDoc.document.write(".top-first { position: absolute; top: 12%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-second { position: absolute; top: 14%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-third { position: absolute; top: 16%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-fourth { position: absolute; top: 18%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-fifth { position: absolute; top: 20%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-sixth { position: absolute; top: 22%; left: 130px; text-align: center; font-size:12px }");
+        frameDoc.document.write(".top-seventh { position: absolute; top: 25%; left: 130px; text-align: center; font-size:12px }");
         frameDoc.document.write("</style>");
 				frameDoc.document.write('</head><body>');
 				//Append the external CSS file.
@@ -214,65 +182,44 @@ export default {
 
   .top-first {
     position: absolute;
-    top: 180px;
+    top: 18%;
     left: 210px;
     text-align: center;
   }
   .top-second {
     position: absolute;
-    top: 203px;
+    top: 21%;
     left: 210px;
     text-align: center;
   }
   .top-third {
     position: absolute;
-    top: 230px;
+    top: 24%;
     left: 210px;
     text-align: center;
   }
   .top-fourth {
     position: absolute;
-    top: 256px;
+    top: 27%;
     left: 210px;
     text-align: center;
   }
   .top-fifth {
     position: absolute;
-    top: 282px;
+    top: 30%;
     left: 210px;
     text-align: center;
   }
   .top-sixth {
     position: absolute;
-    top: 307px;
+    top: 33%;
     left: 210px;
     text-align: center;
   }
   .top-seventh {
     position: absolute;
-    top: 358px;
+    top: 38%;
     left: 210px;
     text-align: center;
-  }
-  .qr_code {
-    position: absolute;
-    top: 540px;
-    left: 341px;
-    text-align: center;
-  }
-
-  .qr_code img{
-    width:300px; 
-    height:300px
-  }
-  .photo {
-    position: absolute;
-    top: 17%;
-    right: 275px;
-    width: 80px;
-    text-align: center;
-  }
-  .photo img{
-    width: 230px;
   }
 </style>
