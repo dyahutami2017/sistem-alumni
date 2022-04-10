@@ -51,7 +51,7 @@ export default {
   methods: {
     updateAkun() {},
     load(){
-        axios.get('http://alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+        axios.get('http://alumni.eduraya.co.id:9000/api/profile/'+ this.$route.params.id).then(res => {
           this.dt_akun.name = res.data.user.name 
           this.dt_akun.nik = res.data.user.nik 
           this.dt_akun.email = res.data.user.email 

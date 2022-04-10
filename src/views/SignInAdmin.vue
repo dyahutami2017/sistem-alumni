@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     login() {
-      const url = "http://alumni.eduraya.co.id/api/login"; 
+      const url = "http://alumni.eduraya.co.id:9000/api/login"; 
       let self = this;
       axios
         .post(url, this.form)

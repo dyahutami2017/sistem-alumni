@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     add() {
-      const url = "http://alumni.eduraya.co.id/api/register";
+      const url = "http://alumni.eduraya.co.id:9000/api/register";
       let self = this;
       axios
         .post(url, this.register)

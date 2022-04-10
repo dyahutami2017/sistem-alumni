@@ -204,7 +204,7 @@ export default {
     },
     methods: {
       load(){
-          axios.get('http://alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get('http://alumni.eduraya.co.id:9000/api/profile/'+ this.$route.params.id).then(res => {
           this.profil.name = res.data.user.name 
           this.profil.nim = res.data.user.nim 
           this.profil.nik = res.data.user.nik 
@@ -239,7 +239,7 @@ export default {
       },
       submit(){
         this.$emit('save-profil', this.profil)
-        const url = "http://alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
+        const url = "http://alumni.eduraya.co.id:9000/api/profile/"+this.$route.params.id;
         axios
           .put(url, this.profil)
           .then(function (response) {

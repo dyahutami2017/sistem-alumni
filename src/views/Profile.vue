@@ -239,7 +239,7 @@ export default {
   components: {},
   methods: {
     load(){
-          axios.get('http://alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get('http://alumni.eduraya.co.id:9000/api/profile/'+ this.$route.params.id).then(res => {
           this.request.name = res.data.user.name 
           this.request.nim = res.data.user.nim 
           this.request.nik = res.data.user.nik 

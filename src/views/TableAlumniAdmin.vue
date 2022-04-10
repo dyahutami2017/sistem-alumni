@@ -372,7 +372,7 @@ export default {
     },
     methods: {
         load(){
-          axios.get('http://alumni.eduraya.co.id/api/alumni').then(res => {
+          axios.get('http://alumni.eduraya.co.id:9000/api/alumni').then(res => {
             this.alumnis = res.data.user
         }).catch ((err) => {
           console.log(err);

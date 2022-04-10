@@ -275,7 +275,7 @@ export default {
   },
   methods: {
       add_bekerja() {
-        const url = "http://alumni.eduraya.co.id/api/tracer";
+        const url = "http://alumni.eduraya.co.id:9000/api/tracer";
         axios
           .post(url, this.tracer)
           .then(function (response) {
@@ -284,7 +284,7 @@ export default {
           .catch((error) => alert(error));
       },
       update_bekerja() {
-        const url = "http://alumni.eduraya.co.id/api/tracer/"+ this.$route.params.id;
+        const url = "http://alumni.eduraya.co.id:9000/api/tracer/"+ this.$route.params.id;
         axios
           .put(url, this.tracer)
           .then(function (response) {
@@ -293,7 +293,7 @@ export default {
           .catch((error) => alert(error));
       },
       load(){
-          axios.get('http://alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+          axios.get('http://alumni.eduraya.co.id:9000/api/tracer/'+ this.$route.params.id).then(res => {
           this.tracer = res.data
           console.log(res.data);
           this.tracer.company_name = res.data.tracer_study.company_name 
