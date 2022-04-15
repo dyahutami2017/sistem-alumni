@@ -191,6 +191,7 @@ export default {
   },
   created: function() {
     self = this;
+    this.load();
   },
   data() {
         return {
@@ -329,8 +330,22 @@ export default {
             })
           .then(function (response) {
             console.log(response)
-            alert(response.data.messege)
-            load();
+            self.$swal({
+              title: 'Sukses',
+              text: response.data.messege,
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            })
+            // if(confirm(response.data.messege)){
+            //   location.reload();
+            // }
           })
           .catch((error) => alert(error));
       }
