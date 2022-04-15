@@ -11,10 +11,10 @@
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n8">
       <div class="row gx-4">
-        <div class="col-auto">
+        <!-- <div class="col-auto">
           <div class="avatar avatar-xl position-relative">
             <img
-              :src="request.photo"
+              src="@/assets/img/bruce-mars.jpg"
               alt="profile_image"
               class="shadow-sm w-100 border-radius-lg"
             />
@@ -22,7 +22,21 @@
         </div>
         <div class="col-auto my-auto">
           <div class="h-100">
-            <h5 class="mb-1">{{request.name}}</h5>
+            <h5 class="mb-1">Richard Davis</h5>
+          </div>
+        </div> -->
+        <div
+          class="mx-auto mt-3 col-lg-8 col-md-6 my-sm-auto ms-sm-auto me-sm-0"
+        >
+          <div class="nav-wrapper position-relative end-0 text-left">
+            <a href="#" class="badge bg-gradient-primary" :validasi='0' @click="tdkValid()" style="margin-right: 5px;">
+              <i class="fa fa-check"></i>
+              Tidak Valid
+            </a>
+            <a href="#" class="badge bg-gradient-primary" :validasi='1' @click="valid()" style="margin-right: 5px;">
+              <i class="fa fa-check"></i>
+              Valid
+            </a>
           </div>
         </div>
         <div
@@ -62,14 +76,12 @@
                   </div>
                 </a>
               </li>
-              {{}}
             </ul>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="mt-3 row">
-          {{}}
           <div class="col-12 mt-md-0 mt-4 position-relative">
             <div class="card card-plain h-100">
               <div class="p-3 pb-0 card-header">
@@ -158,17 +170,23 @@
                         <strong class="text-dark">{{request.graduate_year}}</strong>
                       </td>
                     </tr>
+                    <tr>
+                      <td width="200px">Keterangan Akun</td>
+                      <td>
+                        <strong class="text-dark">{{ket_akun}}</strong>
+                      </td>
+                    </tr>
                   </table>
                 </div>
               </div>
               <div class="p-3 card-body" id="show_dokumen">
                 <div class="mb-3">
                   <h6>KTP</h6>
-                  <img style="width:500px;" :src="request.ktp" alt="">
+                  <!-- <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt=""> -->
                 </div>
                 <div>
                   <h6>Ijazah</h6>
-                  <img style="width:500px;" :src="request.ijazah" alt="">
+                  <!-- <img style="width:500px;" src="https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt=""> -->
                 </div>
               </div>
             </div>
@@ -200,7 +218,7 @@ import setTooltip from "@/assets/js/tooltip.js";
 import axios from "axios";
 
 export default {
-  name: "profile-overview",
+  name: "profile-alumni",
   data() {
     return {
       showMenu: false,
@@ -217,7 +235,8 @@ export default {
       img2,
       img3,
       link: '',
-      src: '',
+      ket_akun: '',
+      validasi: '',
       request: {
         name:'',
         gelar_depan:'',
@@ -234,9 +253,6 @@ export default {
         faculty:'',
         departement:'',
         gender:'',
-        photo:'',
-        ktp:'',
-        ijazah:'',
       },
     };
   },
@@ -257,15 +273,37 @@ export default {
           this.request.faculty = res.data.user.faculty
           this.request.departement = res.data.user.departement
           this.request.gender = res.data.user.gender
-          this.request.ktp = res.data.user.identity_card_url
-          this.request.ijazah = res.data.user.bachelor_certificate_url
-          this.request.photo = res.data.user.photo_url
           this.link = '/form_profile/'+res.data.user.id
+          if(res.data.user.completed == '1'){
+            this.ket_akun = 'Data Lengkap'
+          }
+          if(res.data.user.completed == '1' && res.data.user.validated == '1'){
+            this.ket_akun = 'Tervalidasi'
+          }
+          if(res.data.user.completed == '1' && res.data.user.validated == '0'){
+            this.ket_akun = 'Tidak Tervalidasi'
+          }
           console.log(res.data)
         }).catch ((err) => {
           console.log(err);
         })
       },
+      valid(){
+        axios
+          .put('http://api.alumni.eduraya.co.id/api/validate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
+            console.log(res.data.user)
+          }).catch((err) => {
+          console.log(err);
+        })
+      },
+      tdkValid(){
+        axios
+          .put('http://api.alumni.eduraya.co.id/api/unvalidate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
+            console.log(res.data.user)
+          }).catch((err) => {
+          console.log(err);
+        })
+      }
   },
   mounted() {
     this.$store.state.isAbsolute = true;

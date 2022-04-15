@@ -7,6 +7,7 @@ import Billing from "../views/Billing.vue";
 import RTL from "../views/Rtl.vue";
 import Notifications from "../views/Notifications.vue";
 import Profile from "../views/Profile.vue";
+import ProfileAlumni from "../views/ProfileAlumni.vue";
 import SignIn from "../views/SignIn.vue";
 import SignInAdmin from "../views/SignInAdmin.vue";
 import SignUp from "../views/SignUp.vue";
@@ -23,7 +24,7 @@ const routes = [
   {
     path: "/",
     name: "/",
-    redirect: "/dashboard",
+    redirect: "/sign-in",
   },
   {
     path: "/dashboard/:id",
@@ -59,6 +60,11 @@ const routes = [
     path: "/profile/:id",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/admin/profile_alumni/:id",
+    name: "Profile Alumni",
+    component: ProfileAlumni,
   },
   {
     path: "/sign-in",

@@ -5,7 +5,7 @@
         <div class="card my-4">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div
-              class="bg-gradient-warning shadow-light border-radius-lg pt-3 pb-3"
+              class="bg-gradient-info shadow-light border-radius-lg pt-3 pb-3"
             >
               <h6 class="text-white text-capitalize ps-3">
                 Data User
@@ -18,14 +18,13 @@
                 >
                   <i class="fa fa-plus"></i>Tambah</a
                 >
-                <a
-                  href="#"
+                <input
                   class="btn btn-primary mb-1"
                   target=""
                   style="float: right; margin-right: 10px"
-                >
-                  <i class="fa fa-download"></i> Import</a
-                >
+                  type="file"
+                  @change="previewFiles"
+                />
               </h6>
             </div>
           </div>
@@ -140,7 +139,7 @@ import VmdButton from "@/components/VmdButton.vue";
 import VmdInput from "@/components/VmdInput.vue";
 import FormUser from "./components/FormUser.vue";
 import $ from "jquery";
-
+var XLSX = require("xlsx");
 export default {
   name: "table-user",
   components: {
@@ -179,7 +178,21 @@ export default {
         this.users = this.users.filter(function(user){
           return user.id !== id;
         })
-      }
+      },
+      previewFiles(e) {
+          var input = e.target;
+          var reader = new FileReader();
+          reader.onload = () => {
+            var fileData = reader.result;
+            var wb = XLSX.read(fileData, {type : 'binary'});
+            wb.SheetNames.forEach((sheetName) => {
+              var rowObj =XLSX.utils.sheet_to_json(wb.Sheets[sheetName]);	        
+              // this.excelData = JSON.stringify(rowObj)
+              console.log(JSON.stringify(rowObj))
+            })
+          };
+          reader.readAsBinaryString(input.files[0]);
+       }
     },
     mounted() {
   },

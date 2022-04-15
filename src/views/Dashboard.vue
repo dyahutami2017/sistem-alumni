@@ -2,64 +2,49 @@
   <div class="py-4 container-fluid" style="min-height: 450px">
     <div class="row mb-4">
       <div class="col-lg-12 position-relative z-index-2">
-        <div v-if="role === 'alumni'" class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="row">
+          <div class="col-lg-4 col-md-6 col-sm-6">
             <mini-cards
               v-if="profil_lengkap === 'ya'"
-              title="Profil Sudah Lengkap"
-              iconName="task_alt"
+              value="Profil Alumni"
+              iconName="person"
+              percentage="Profil Sudah Lengkap"
               iconClass="text-white"
               iconBackground="bg-gradient-success"
             />
             <mini-cards
               v-else-if="profil_lengkap === 'tidak'"
-              title="Profil Belum Lengkap"
-              iconName="highlight_off"
+              value="Profil Alumni"
+              iconName="person"
+              percentage="Profil Belum Lengkap"
               iconClass="text-white"
               iconBackground="bg-gradient-primary"
             />
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="col-lg-4 col-md-6 col-sm-6">
             <mini-cards
               v-if="survey_lengkap === 'ya'"
-              title="Tracer Study Terisi"
-              iconName="task_alt"
+              value="Tracer Study"
+              iconName="location_searching"
+              percentage="Tracer Study Sudah Terisi"
               iconClass="text-white"
               iconBackground="bg-gradient-success"
             />
             <mini-cards
               v-else-if="survey_lengkap === 'tidak'"
-              title="Tracer Belum Terisi"
-              iconName="task_alt"
+              value="Tracer Study"
+              iconName="location_searching"
+              percentage="Tracer Study Belum Terisi"
               iconClass="text-white"
               iconBackground="bg-gradient-primary"
             />
           </div>
-        </div>
-        <div v-else class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
+          <div class="col-lg-4 col-md-6 col-sm-6">
             <mini-cards
-              title="Pendaftar"
-              value="150"
-              iconName="person"
-              iconClass="text-white"
-              iconBackground="bg-gradient-info"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-cards
-              title="Teraktivasi"
-              value="138"
-              iconName="person"
-              iconClass="text-white"
-              iconBackground="bg-gradient-success"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6 mt-lg-0 mt-4">
-            <mini-cards
-              title="Data Alumni"
-              value="208"
-              iconName="person"
+              value="Update Tracer Study"
+              :exp="exp_date"
+              iconName="info"
+              percentage="Perlu Diupdate"
               iconClass="text-white"
               iconBackground="bg-gradient-warning"
             />
@@ -103,8 +88,10 @@
   </div>
 </template>
 <script>
+/*eslint-disable*/
 import MiniCards from "./components/MiniCards.vue";
 // import $ from "jquery";
+import axios from "axios";
 
 export default {
   name: "dashboard-default",
@@ -114,11 +101,25 @@ export default {
   data() {
     return {
       profil_lengkap: "tidak",
-      survey_lengkap: "ya",
-      role: "alumni",
+      survey_lengkap: "",
+      exp_date: "",
     };
   },
+  methods: {
+    load() {
+          axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+          this.tracer = res.data
+          console.log(res.data);
+          this.exp_date = res.data.tracer_study.created_at;          
+          this.survey_lengkap = "ya";          
+        }).catch ((err) => {
+          console.log(err);
+          this.survey_lengkap = "tidak";          
+        })
+      },
+  },
   mounted() {
+    this.load();
     // window.location.href = "/form_profile";
     // $("#modalDokumen").addClass("show");
     // $(".modal").css("display", "block");

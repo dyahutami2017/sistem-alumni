@@ -20,7 +20,7 @@
             <vmd-button
               class="my-4 mb-2"
               variant="gradient"
-              color="warning"
+              color="info"
               fullWidth
               >Ubah
             </vmd-button>
@@ -61,7 +61,7 @@ export default {
     methods: {
       submit() {
         this.$emit("update-akun", this.password);
-        const url = "http://alumni.eduraya.co.id:9000/api/profile/"+this.$route.params.id;
+        const url = "http://api.alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
         axios
           .put(url, this.password)
           .then(function (response) {

@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     load(){
-          axios.get('http://alumni.eduraya.co.id:9000/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
           this.cv.name = res.data.user.name 
           this.cv.birth_place = res.data.user.birth_place 
           this.cv.birth_date = res.data.user.birth_date 
@@ -100,9 +100,25 @@ export default {
           console.log(err);
         })
       },
+      showAlert(){
+      this.$swal({
+        title: 'Oops Maaf',
+        text: "Mohon Lengkapi Data Profil!",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push('/form_profile/'+this.$route.params.id);
+        }
+      })
+    }
   },
   mounted: function () {
     this.load();
+    this.showAlert();
     $("#btnPrint").click(function() {
       var divContents = document.getElementById("print_cv").innerHTML;
       var a = window.open("", "", "height=1000, width=1000");

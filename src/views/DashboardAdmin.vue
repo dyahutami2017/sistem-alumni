@@ -2,41 +2,7 @@
   <div class="py-4 container-fluid" style="min-height: 450px">
     <div class="row mb-4">
       <div class="col-lg-12 position-relative z-index-2">
-        <div v-if="role === 'alumni'" class="row">
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <mini-cards
-              v-if="profil_lengkap === 'ya'"
-              title="Profil Sudah Lengkap"
-              iconName="task_alt"
-              iconClass="text-white"
-              iconBackground="bg-gradient-success"
-            />
-            <mini-cards
-              v-else-if="profil_lengkap === 'tidak'"
-              title="Profil Belum Lengkap"
-              iconName="highlight_off"
-              iconClass="text-white"
-              iconBackground="bg-gradient-primary"
-            />
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-6">
-            <mini-cards
-              v-if="survey_lengkap === 'ya'"
-              title="Tracer Study Terisi"
-              iconName="task_alt"
-              iconClass="text-white"
-              iconBackground="bg-gradient-success"
-            />
-            <mini-cards
-              v-else-if="survey_lengkap === 'tidak'"
-              title="Tracer Belum Terisi"
-              iconName="task_alt"
-              iconClass="text-white"
-              iconBackground="bg-gradient-primary"
-            />
-          </div>
-        </div>
-        <div v-else class="row">
+        <div class="row">
           <div class="col-lg-4 col-md-6 col-sm-6 mt-lg-0 mt-4">
             <mini-cards
               title="Data Profil Lengkap"
@@ -142,7 +108,6 @@ export default {
     return {
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
-      role: "admin",
     };
   },
   mounted() {

@@ -1,4 +1,5 @@
-#print_kartu {
+@media print {
+  #print_kartu {
     position: relative;
     text-align: center;
     color: white;
@@ -7,45 +8,197 @@
   .top-first {
     position: absolute;
     top: 18%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-second {
     position: absolute;
     top: 21%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-third {
     position: absolute;
     top: 24%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-fourth {
     position: absolute;
     top: 27%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-fifth {
     position: absolute;
     top: 30%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-sixth {
     position: absolute;
     top: 33%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
   .top-seventh {
     position: absolute;
     top: 38%;
-    left: 250px;
+    left: 210px;
     text-align: center;
   }
-  p{
-      color: red;
+}
+
+@media only screen and (min-width: 600px){
+  #print_kartu {
+    position: relative;
+    text-align: center;
+    color: white;
   }
+
+  #img_card{
+    width: 723.19px;
+    height: 913.05px;
+  }
+
+  .top-first {
+    position: absolute;
+    top: 163px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-second {
+    position: absolute;
+    top: 190px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-third {
+    position: absolute;
+    top: 214px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-fourth {
+    position: absolute;
+    top: 236px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-fifth {
+    position: absolute;
+    top: 260px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-sixth {
+    position: absolute;
+    top: 285px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-seventh {
+    position: absolute;
+    top: 332px;
+    left: 184px;
+    text-align: center;
+  }
+  .qr_code {
+    position: absolute;
+    top: 515px;
+    left: 317px;
+    text-align: center;
+  }
+
+  .qr_code img{
+    width:270px; 
+    height:270px
+  }
+  .photo {
+    position: absolute;
+    top: 17%;
+    right: 275px;
+    width: 80px;
+    text-align: center;
+  }
+  .photo img{
+    width: 230px;
+  }
+}
+@media only screen and (min-width: 768px){
+  #print_kartu {
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+
+  #img_card{
+    width: 723.19px;
+    height: 913.05px;
+  }
+
+  .top-first {
+    position: relative;
+    z-index: 2;
+    top: 163px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-second {
+    position: absolute;
+    top: 190px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-third {
+    position: absolute;
+    top: 214px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-fourth {
+    position: absolute;
+    top: 236px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-fifth {
+    position: absolute;
+    top: 260px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-sixth {
+    position: absolute;
+    top: 285px;
+    left: 184px;
+    text-align: center;
+  }
+  .top-seventh {
+    position: absolute;
+    top: 332px;
+    left: 184px;
+    text-align: center;
+  }
+  .qr_code {
+    position: absolute;
+    top: 515px;
+    left: 317px;
+    text-align: center;
+  }
+
+  .qr_code img{
+    width:270px; 
+    height:270px
+  }
+  .photo {
+    position: absolute;
+    top: 17%;
+    right: 275px;
+    width: 80px;
+    text-align: center;
+  }
+  .photo img{
+    width: 230px;
+  }
+}

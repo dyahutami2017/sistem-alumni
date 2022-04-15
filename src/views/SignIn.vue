@@ -7,14 +7,14 @@
       background-color: {{}};
     "
   >
-    <span class="mask bg-gradient-warning opacity-6"></span>
+    <span class="mask bg-gradient-secondary opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
         <div class="col-lg-4 col-md-8 col-12 mx-auto">
           <div class="card z-index-0 fadeIn3 fadeInBottom">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div
-                class="bg-gradient-warning shadow-success border-radius-lg py-3 pe-1"
+                class="bg-gradient-info shadow-success border-radius-lg py-3 pe-1"
               >
                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
                   Sistem Alumni
@@ -41,7 +41,7 @@
                   <vmd-button
                     class="my-4 mb-2"
                     variant="gradient"
-                    color="warning"
+                    color="info"
                     fullWidth
                     >Sign In</vmd-button
                   >
@@ -50,7 +50,7 @@
                   Belum memiliki akun?
                   <router-link
                     :to="{ name: 'SignUp' }"
-                    class="text-warning text-gradient font-weight-bold"
+                    class="text-info text-gradient font-weight-bold"
                     >Sign Up</router-link
                   >
                 </p>
@@ -138,7 +138,7 @@ export default {
   },
   methods: {
     login() {
-      const url = "http://alumni.eduraya.co.id:9000/api/login"; 
+      const url = "http://api.alumni.eduraya.co.id/api/login"; 
       let self = this;
       axios
         .post(url, this.form)

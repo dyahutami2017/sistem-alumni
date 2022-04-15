@@ -5,11 +5,7 @@
     :aria-controls="collapseRef"
     :aria-expanded="isExpanded"
     class="nav-link"
-    :class="
-      getRoute() === collapseRef
-        ? `active bg-gradient-${this.$store.state.mcolor}`
-        : ''
-    "
+    :class="getRoute() === collapseRef ? `active bg-gradient-info` : ''"
     v-bind="$attrs"
     type="button"
     @click="this.isExpanded = !this.isExpanded"

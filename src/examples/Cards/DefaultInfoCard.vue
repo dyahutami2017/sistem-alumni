@@ -3,7 +3,7 @@
     <div class="p-3 mx-4 text-center card-header">
       <div
         :class="icon_bg"
-        class="icon icon-shape icon-lg bg-gradient-warning shadow text-center border-radius-md"
+        class="icon icon-shape icon-lg bg-gradient-info shadow text-center border-radius-md"
       >
         <i
           class="material-icons opacity-10"

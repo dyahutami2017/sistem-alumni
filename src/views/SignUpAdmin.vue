@@ -76,7 +76,7 @@
                         <vmd-button
                           class="mt-4"
                           variant="gradient"
-                          color="warning"
+                          color="info"
                           fullWidth
                           size="lg"
                           >Register</vmd-button
@@ -89,7 +89,7 @@
                       Sudah memiliki akun?
                       <router-link
                         :to="{ name: 'SignIn' }"
-                        class="text-warning text-gradient font-weight-bold"
+                        class="text-info text-gradient font-weight-bold"
                         >Sign In</router-link
                       >
                     </p>
@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     add() {
-      const url = "http://alumni.eduraya.co.id:9000/api/register";
+      const url = "http://api.alumni.eduraya.co.id/api/register";
       let self = this;
       axios
         .post(url, this.register)

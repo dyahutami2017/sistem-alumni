@@ -20,7 +20,7 @@
                       <td><strong class="text-dark">{{dt_akun.email}}</strong></td>
                     </tr>
                   </table>
-                  <button type="submit" class="btn bg-gradient-warning mb-2 btnEdit">Change Password</button>
+                  <button type="submit" class="btn bg-gradient-info mb-2 btnEdit">Change Password</button>
                 <form-card-akun class="formUpdate" v-on:update-akun="updateAkun" />
             </div>
           </div>
@@ -51,7 +51,7 @@ export default {
   methods: {
     updateAkun() {},
     load(){
-          axios.get('http://alumni.eduraya.co.id:9000/profile/'+ this.$route.params.id).then(res => {
+          axios.get('http://api.alumni.eduraya.co.id/profile/'+ this.$route.params.id).then(res => {
           this.dt_akun.name = res.data.user.name 
           this.dt_akun.nik = res.data.user.nik 
           this.dt_akun.email = res.data.user.email 

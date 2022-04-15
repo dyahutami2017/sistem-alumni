@@ -6,7 +6,7 @@
         <div class="card my-4">
           <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
             <div
-              class="bg-gradient-warning shadow-light border-radius-lg pt-4 pb-3"
+              class="bg-gradient-info shadow-light border-radius-lg pt-4 pb-3"
             >
               <h6 class="text-white text-capitalize ps-3" >Data Alumni</h6>
             </div>
@@ -43,7 +43,7 @@
                       class="my-4 mb-2"
                       id="btnSimpan"
                       variant="gradient"
-                      color="warning"
+                      color="info"
                       fullWidth
                       >Search
                     </vmd-button>
@@ -52,7 +52,6 @@
             </form>
             <div class="table-responsive p-0" id="tbl_alumni">
               <table
-                v-bind:alumnis="alumnis"
                 class="table align-items-center mb-0"
               >
                 <thead>
@@ -146,33 +145,25 @@
                 </thead>
                 <tbody>
                   <tr v-for="alumni in alumnis" :key="alumni.id">
-                    <td class="align-middle text-center">
-                      <a
-                        href="javascript:;"
-                        class="badge bg-gradient-success"
-                        data-toggle="tooltip"
-                        data-original-title=""
+                    <td class="d-flex flex-column justify-content-center">
+                      <strong
+                        v-if="alumni.completed == '1'"
                       >
-                        <i class="fa fa-check"></i>
-                      </a>
-                      <!-- <a
-                        v-if="profil.aktivasi === 'ya'"
-                        href="javascript:;"
-                        class="badge bg-gradient-success"
-                        data-toggle="tooltip"
-                        data-original-title=""
+                        <i class="fa fa-check"></i> 
+                        Data Lengkap
+                      </strong>
+                      <strong
+                        v-if="alumni.validated == '1'"
                       >
-                        <i class="fa fa-check"></i>
-                      </a>
-                      <a
-                        v-else
-                        href="javascript:;"
-                        class="badge bg-gradient-secondary"
-                        data-toggle="tooltip"
-                        data-original-title=""
+                        <i class="fa fa-check"></i> 
+                        Tervalidasi
+                      </strong>
+                      <strong
+                        v-if="alumni.validated == '0'"
                       >
-                        <i class="fa fa-check"></i>
-                      </a> -->
+                        <i class="fa fa-check"></i> 
+                        Tidak Tervalidasi
+                      </strong>
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
@@ -222,7 +213,7 @@
                       <div class="d-flex px-2 py-1">
                         <div>
                           <img
-                            src="/img/ava.1b72e298.jpg"
+                            :src="alumni.photo_url"
                             class="avatar avatar-sm me-3 border-radius-lg"
                             alt="user1"
                           />
@@ -230,7 +221,8 @@
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-sm">
                             <a
-                              href="/profile/"
+                              href="#"
+                              @click="show(alumni)"
                             >
                               {{ alumni.name }}
                             </a>
@@ -308,7 +300,8 @@
                     </td>
                     <td class="align-middle">
                       <a 
-                        href="/profile"
+                        href="#"
+                        @click="show(alumni)"
                         class="badge bg-gradient-primary"
                         data-toggle="tooltip"
                         data-original-title="Lihat Alumni"
@@ -361,6 +354,7 @@ export default {
   },
   data() {
         return {
+            src: '',
             tahunLulus: 'Pilih Tahun',
             fakultas: 'Pilih Fakultas',
             jurusan: 'Pilih Jurusan',
@@ -372,12 +366,15 @@ export default {
     },
     methods: {
         load(){
-          axios.get('http://alumni.eduraya.co.id:9000/api/alumni').then(res => {
+          axios.get('http://api.alumni.eduraya.co.id/api/alumni').then(res => {
             this.alumnis = res.data.user
         }).catch ((err) => {
           console.log(err);
         })
-      }
+      },
+      show(alumni){ 
+        this.$router.push('/admin/profile_alumni/'+alumni.id);
+      },
     },
     mounted() {
       this.load();
