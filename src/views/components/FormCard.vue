@@ -139,18 +139,21 @@
               <label class="label col-12">Foto</label><br/>
               <input type="file" class="form-control" name="foto" ref="file" id="file" isrequired="true" @change="uploadPhoto()">
             </div>
+            <img :src="photo_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
           </div>
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">KTP</label><br/>
               <input type="file" class="form-control" name="ktp" ref="ktp" id="ktp" isrequired="true" @change="uploadKTP()">
             </div>
+            <img :src="ktp_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
           </div>
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Ijazah</label><br/>
               <input type="file" class="form-control" name="ijazah" ref="ijazah" id="ijazah" isrequired="true" @change="uploadIjazah()">
             </div>
+            <img :src="ktp_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
           </div>
           <div class="col-lg-8"></div>
           <div class="col-lg-2 col-sm-6">
@@ -197,6 +200,8 @@ export default {
         return {
             src: '',
             photo_url: '',
+            ktp_url: '',
+            ijazah_url: '',
             myValue: 'Pilih Fakultas',
             myValue2: 'Pilih Jurusan',
             // myValue3: 'Pilih Provinsi',
@@ -251,6 +256,8 @@ export default {
           self.profil.organization = res.data.user.organization
           self.profil.achievement = res.data.user.achievement
           self.photo_url = res.data.user.photo_url
+          self.ktp_url = res.data.user.identity_card_url
+          self.ijazah_url = res.data.user.bachelor_certificate_url
           self.profil.photo = res.data.user.photo
           self.profil.identity_card = res.data.user.identity_card
           self.profil.bachelor_certificate = res.data.user.bachelor_certificate

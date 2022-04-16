@@ -112,29 +112,52 @@ export default {
       })
     },
     tracer(){
-        axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+        axios.get('http://api.alumni.eduraya.co.id/api/tracer_w/'+ this.$route.params.id).then(res => {
         console.log(res.data);
       }).catch ((err) => {
         console.log(err);
-        this.$swal({
-          title: 'Oops Maaf',
-          text: "Mohon Lengkapi Data Tracer Study!",
-          icon: 'warning',
-          showCancelButton: false,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            this.$router.push('/tracer_study/'+this.$route.params.id);
-          }
-        })
       })
     },
+    tracer_study(){
+        axios.get('http://api.alumni.eduraya.co.id/api/tracer_s/'+ this.$route.params.id).then(res => {
+        console.log(res.data);
+      }).catch ((err) => {
+        console.log(err);
+      })
+    },
+    tracer_enterpreneur(){
+        axios.get('http://api.alumni.eduraya.co.id/api/tracer_e/'+ this.$route.params.id).then(res => {
+        console.log(res.data);
+      }).catch ((err) => {
+        console.log(err.response.status)
+        // return err.response.status;
+        // return err.response;
+        //this.swalFailed();
+      })
+    },
+    swalFailed(){
+      this.$swal({
+        title: 'Oops Maaf',
+        text: "Mohon Lengkapi Data Tracer Study!",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push('/tracer_study/'+this.$route.params.id);
+        }
+      })
+    }
   },
   beforeMount(){
     this.load();
     this.tracer();
+    // if(this.tracer_enterpreneur() == "404"){
+    //   this.swalFailed;
+    // };
+    this.tracer_enterpreneur();
   },
   mounted: function () {
     $("#btnPrint").click(function() {

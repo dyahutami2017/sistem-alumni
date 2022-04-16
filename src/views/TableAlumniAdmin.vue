@@ -13,7 +13,7 @@
           </div>
           <div class="card-body pb-1">
             <form id="form_alumni">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-3">
                   <div class="input-group input-group-outline mb-3">
                     <label class="col-12">Tahun Lulus</label><br/>
@@ -48,7 +48,7 @@
                       >Search
                     </vmd-button>
                 </div>
-              </div>
+              </div> -->
             </form>
             <div class="table-responsive p-0" id="tbl_alumni">
               <table
@@ -146,44 +146,69 @@
                 <tbody>
                   <tr v-for="alumni in alumnis" :key="alumni.id">
                     <td class="d-flex flex-column justify-content-center">
-                      <strong
+                      <strong class="text-success p-1" style="font-size:12px"
                         v-if="alumni.completed == '1'"
                       >
                         <i class="fa fa-check"></i> 
                         Data Lengkap
                       </strong>
-                      <strong
+                      <strong class="text-warning p-1" style="font-size:12px"
+                        v-else
+                      >
+                        <i class="fa fa-exclamation-triangle"></i> 
+                        Belum Lengkap
+                      </strong>
+                      <strong class="text-success p-1" style="font-size:12px"
                         v-if="alumni.validated == '1'"
                       >
                         <i class="fa fa-check"></i> 
                         Tervalidasi
                       </strong>
-                      <strong
-                        v-if="alumni.validated == '0'"
+                      <strong class="text-danger p-1" style="font-size:12px"
+                        v-else-if="alumni.validated == '0'"
                       >
-                        <i class="fa fa-check"></i> 
+                        <i class="fa fa-times"></i> 
                         Tidak Tervalidasi
                       </strong>
+                      
                     </td>
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div class="d-flex flex-column justify-content-center">
-                          <a
+                          <a v-if="alumni.bachelor_certificate_url != null"
                             href="javascript:;"
-                            class="badge badge-sm bg-gradient-primary mb-1"
+                            class="badge badge-sm bg-gradient-info mb-1"
                             data-toggle="tooltip"
                             data-original-title=""
                           >
                             <i class="fa fa-check"></i>
                             Ijazah
                           </a>
-                          <a
+                          <a v-else
+                            href="javascript:;"
+                            class="badge badge-sm bg-gradient-danger mb-1"
+                            data-toggle="tooltip"
+                            data-original-title=""
+                          >
+                            <i class="fa fa-times"></i>
+                            Ijazah
+                          </a>
+                          <a v-if="alumni.identity_card_url != null"
                             href="javascript:;"
                             class="badge badge-sm bg-gradient-info"
                             data-toggle="tooltip"
                             data-original-title=""
                           >
                             <i class="fa fa-check"></i>
+                            KTP
+                          </a>
+                          <a v-else
+                            href="javascript:;"
+                            class="badge badge-sm bg-gradient-danger mb-1"
+                            data-toggle="tooltip"
+                            data-original-title=""
+                          >
+                            <i class="fa fa-times"></i>
                             KTP
                           </a>
                           <!-- <a
@@ -212,10 +237,15 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
-                          <img
+                          <img v-if="alumni.photo_url != null"
                             :src="alumni.photo_url"
                             class="avatar avatar-sm me-3 border-radius-lg"
-                            alt="user1"
+                            alt="user"
+                          />
+                          <img v-else
+                            src="/img/user.4968cec9.png"
+                            class="avatar avatar-sm me-3 border-radius-lg"
+                            alt="user"
                           />
                         </div>
                         <div class="d-flex flex-column justify-content-center">
@@ -319,7 +349,8 @@
                         <i class="fa fa-pencil"></i>
                       </a>
                       <a
-                        href="javascript:;"
+                        href="#"
+                        @click="hapus(alumni)"
                         class="badge bg-gradient-danger"
                         data-toggle="tooltip"
                         data-original-title="Hapus Alumni"
@@ -374,6 +405,16 @@ export default {
       },
       show(alumni){ 
         this.$router.push('/admin/profile_alumni/'+alumni.id);
+      },
+      hapus(alumni){ 
+        axios.delete('http://api.alumni.eduraya.co.id/api/alumni/'+alumni.id).then(res => {
+            console.log(res.data)
+            this.load()
+            let index = this.alumnis.indexOf(alumni.id)
+            this.alumnis.splice(index,1)
+        }).catch ((err) => {
+          console.log(err);
+        })
       },
     },
     mounted() {

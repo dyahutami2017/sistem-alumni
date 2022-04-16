@@ -12,24 +12,24 @@
               <b>PERSONAL INFORMATION</b>
               <hr>
               <table style="width:50%">
-                  <img src="../assets/img/ava.jpg" align="right" width="124" height="142" style="position:absolute; right:10%">
+                  <img :src="cv.photo" align="right" width="142" height="142" style="position:absolute; right:10%">
                 <tr>
                   <th></th>
                   <th></th>
                 </tr>
                 <tr>
-                    <td>Nama Lengkap</td>
+                    <td>Name</td>
                     <td>: {{cv.name}} </td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Tempat Tanggal Lahir</td>
+                    <td>Birth Place, Birth Date</td>
                     <td>: {{cv.birth_place}}, {{cv.birth_date}} </td>  
                 </tr>
-                    <td>Alamat</td>
+                    <td>Address</td>
                     <td>: {{cv.address}}</td>
                 <tr>
-                    <td>NO HP</td>
+                    <td>Phone Number</td>
                     <td>: {{cv.phone_number}}</td>
                 </tr>
                 <tr>
@@ -38,7 +38,7 @@
                 </tr>
               </table>
               <hr>
-              <b>PENDIDIKAN FORMAL</b>
+              <b>EDUCATION</b>
               <hr>
               <table style="width:80%">
                 <tr>
@@ -51,8 +51,31 @@
                 </tr>
               </table>            
               <hr>
-              <!-- <b>KEAHLIAN</b><hr>
-                        Mengoperasikan Komputer : Microsoft Office<br> -->
+              <b>ORGANIZATION</b>
+              <hr>
+              <table style="width:80%">
+                <tr>
+                <th></th>
+                <th></th>
+                </tr>
+                <tr>
+                    <td>{{cv.organization}}</td>
+                </tr>
+              </table>  
+              <hr>
+              <b>ACHIEVEMENTS</b>
+              <hr>
+              <table style="width:80%">
+                <tr>
+                <th></th>
+                <th></th>
+                </tr>
+                <tr>
+                    <td>{{cv.achievement}}</td>
+                </tr>
+              </table>  
+              <!-- <b>Organisasi</b><hr>
+                        {{cv.organization}}<br> -->
             </div>
           </div>
         </div>
@@ -72,6 +95,7 @@ export default {
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
       role: "user",
+      src: "",
       cv: {
         name: '',
         birth_place: '',
@@ -81,6 +105,9 @@ export default {
         email: '',
         entry_year: '',
         graduate_year: '',
+        organization: '',
+        achievement: '',
+        photo: '',
       }
     };
   },
@@ -95,30 +122,45 @@ export default {
           this.cv.phone_number = res.data.user.phone_number 
           this.cv.address = res.data.user.address 
           this.cv.email = res.data.user.email
+          this.cv.organization = res.data.user.organization
+          this.cv.achievement = res.data.user.achievement
+          this.cv.photo = res.data.user.photo_url
           console.log(res.data)
+          if(res.data.user.validate == '0'){
+            this.$swal({
+              title: 'Oops Maaf',
+              text: "Mohon Lengkapi Data Profil!",
+              icon: 'warning',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                this.$router.push('/form_profile/'+this.$route.params.id);
+              }
+            })
+          }
         }).catch ((err) => {
           console.log(err);
+          this.$swal({
+            title: 'Oops Maaf',
+            text: "Mohon Lengkapi Data Profil!",
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.$router.push('/form_profile/'+this.$route.params.id);
+            }
+          })
         })
       },
-      showAlert(){
-      this.$swal({
-        title: 'Oops Maaf',
-        text: "Mohon Lengkapi Data Profil!",
-        icon: 'warning',
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'OK'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$router.push('/form_profile/'+this.$route.params.id);
-        }
-      })
-    }
   },
   mounted: function () {
     this.load();
-    this.showAlert();
     $("#btnPrint").click(function() {
       var divContents = document.getElementById("print_cv").innerHTML;
       var a = window.open("", "", "height=1000, width=1000");

@@ -37,8 +37,8 @@
 <script>
 import SidenavListAlumni from "./SidenavListAlumni.vue";
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/logo-uns.png";
-import logoDark from "@/assets/img/logo-ct-dark.png";
+import logo from "@/assets/img/uns_logo_white.png";
+import logoDark from "@/assets/img/uns_logo_white.png";
 
 export default {
   name: "index",

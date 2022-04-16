@@ -4,10 +4,10 @@
   <div
     class="page-header align-items-start min-vh-100"
     style="
-      background-color: {{}};
+      background-image: url('/img/foto_gedung_rektorat.42054fea.png')
     "
   >
-    <span class="mask bg-gradient-secondary opacity-6"></span>
+    <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
         <div class="col-lg-4 col-md-8 col-12 mx-auto">

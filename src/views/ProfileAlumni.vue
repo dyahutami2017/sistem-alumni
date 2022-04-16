@@ -11,29 +11,15 @@
     </div>
     <div class="card card-body mx-3 mx-md-4 mt-n8">
       <div class="row gx-4">
-        <!-- <div class="col-auto">
-          <div class="avatar avatar-xl position-relative">
-            <img
-              src="@/assets/img/bruce-mars.jpg"
-              alt="profile_image"
-              class="shadow-sm w-100 border-radius-lg"
-            />
-          </div>
-        </div>
-        <div class="col-auto my-auto">
-          <div class="h-100">
-            <h5 class="mb-1">Richard Davis</h5>
-          </div>
-        </div> -->
         <div
           class="mx-auto mt-3 col-lg-8 col-md-6 my-sm-auto ms-sm-auto me-sm-0"
         >
           <div class="nav-wrapper position-relative end-0 text-left">
-            <a href="#" class="badge bg-gradient-primary" :validasi='0' @click="tdkValid()" style="margin-right: 5px;">
+            <a href="#" class="badge bg-gradient-primary btnUnvalid" :validasi='0' @click="tdkValid()" style="margin-right: 5px;">
               <i class="fa fa-check"></i>
               Tidak Valid
             </a>
-            <a href="#" class="badge bg-gradient-primary" :validasi='1' @click="valid()" style="margin-right: 5px;">
+            <a href="#" class="badge bg-gradient-primary btnValid" :validasi='1' @click="valid()" style="margin-right: 5px;">
               <i class="fa fa-check"></i>
               Valid
             </a>
@@ -86,10 +72,21 @@
             <div class="card card-plain h-100">
               <div class="p-3 pb-0 card-header">
                 <div class="row">
-                  <div class="col-8 d-flex align-items-center">
-                    <h6 class="mb-0">Informasi Profil</h6>
+                  <div class="col-md-2">
+                    <div class="avatar avatar-xl position-relative">
+                      <img v-if="request.photo != null"
+                        :src="request.photo"
+                        alt="profile_image"
+                        class="shadow-sm w-100 border-radius-lg"
+                      />
+                      <img v-else
+                        src="/img/user.4968cec9.png"
+                        alt="profile_image"
+                        class="shadow-sm w-100 border-radius-lg"
+                      />
+                    </div>
                   </div>
-                  <div class="col-4 text-end">
+                  <div class="col-12 text-end">
                     <a :href="link">
                       <i
                         class="text-sm fas fa-user-edit text-secondary"
@@ -174,6 +171,7 @@
                       <td width="200px">Keterangan Akun</td>
                       <td>
                         <strong class="text-dark">{{ket_akun}}</strong>
+                        <strong class="text-dark">{{ket_validasi}}</strong>
                       </td>
                     </tr>
                   </table>
@@ -216,7 +214,7 @@ import $ from "jquery";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 import axios from "axios";
-
+let ket_caption;
 export default {
   name: "profile-alumni",
   data() {
@@ -236,6 +234,7 @@ export default {
       img3,
       link: '',
       ket_akun: '',
+      ket_validasi: '',
       validasi: '',
       request: {
         name:'',
@@ -253,6 +252,7 @@ export default {
         faculty:'',
         departement:'',
         gender:'',
+        photo:'',
       },
     };
   },
@@ -273,15 +273,27 @@ export default {
           this.request.faculty = res.data.user.faculty
           this.request.departement = res.data.user.departement
           this.request.gender = res.data.user.gender
+          this.request.photo = res.data.user.photo_url
           this.link = '/form_profile/'+res.data.user.id
           if(res.data.user.completed == '1'){
             this.ket_akun = 'Data Lengkap'
           }
-          if(res.data.user.completed == '1' && res.data.user.validated == '1'){
-            this.ket_akun = 'Tervalidasi'
+          else if(res.data.user.completed == '0'){
+            this.ket_akun = 'Belum Lengkap'
           }
-          if(res.data.user.completed == '1' && res.data.user.validated == '0'){
-            this.ket_akun = 'Tidak Tervalidasi'
+          if(res.data.user.validated == '1'){
+            this.ket_validasi = 'Tervalidasi'
+            $(".btnUnvalid").show()
+            $(".btnValid").hide()
+          }
+          else if(res.data.user.validated == '0'){
+            this.ket_validasi = 'Tidak Tervalidasi'
+            $(".btnValid").show()
+            $(".btnUnvalid").hide()
+          }
+          else{
+            $(".btnValid").show()
+            $(".btnUnvalid").show()
           }
           console.log(res.data)
         }).catch ((err) => {
@@ -292,6 +304,10 @@ export default {
         axios
           .put('http://api.alumni.eduraya.co.id/api/validate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
             console.log(res.data.user)
+            $(".btnValid").hide();
+            $(".btnUnvalid").show()
+            ket_caption = 'Data Alumni Valid'
+            this.swalSuccess(ket_caption)
           }).catch((err) => {
           console.log(err);
         })
@@ -299,10 +315,29 @@ export default {
       tdkValid(){
         axios
           .put('http://api.alumni.eduraya.co.id/api/unvalidate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
-            console.log(res.data.user)
+            console.log(res.data)
+            $(".btnUnvalid").hide();
+            $(".btnValid").show();
+            ket_caption = 'Data Alumni Tidak Valid';
+            this.swalSuccess(ket_caption);
           }).catch((err) => {
           console.log(err);
         })
+      },
+      swalSuccess(caption){
+        this.$swal({
+              title: 'Update',
+              text: caption,
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                location.reload();
+              }
+            })
       }
   },
   mounted() {

@@ -13,8 +13,13 @@
       <div class="row gx-4">
         <div class="col-auto">
           <div class="avatar avatar-xl position-relative">
-            <img
+            <img v-if="request.photo != null"
               :src="request.photo"
+              alt="profile_image"
+              class="shadow-sm w-100 border-radius-lg"
+            />
+            <img v-else
+              src="/img/user.4968cec9.png"
               alt="profile_image"
               class="shadow-sm w-100 border-radius-lg"
             />
