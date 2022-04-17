@@ -21,10 +21,10 @@
         </div>
         <ul class="navbar-nav justify-content-end">
           <li class="nav-item d-flex align-items-center">
-            <router-link
-              :to="{ name: 'SignIn' }"
+            <a
+              @click="logout()"
+              href="#"
               class="px-0 nav-link font-weight-bold lh-1"
-              :class="textWhite ? textWhite : 'text-body'"
             >
               <i
                 class="material-icons"
@@ -32,7 +32,7 @@
               >
                 logout
               </i>
-            </router-link>
+            </a>
           </li>
           <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
             <a
@@ -191,15 +191,19 @@
   </nav>
 </template>
 <script>
+/* eslint-disable */
 // import VmdInput from "@/components/VmdInput.vue";
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
   name: "navbar",
   data() {
     return {
       showMenu: false,
+      loggedIn: localStorage.getItem("loggedIn"),
+      token: localStorage.getItem("token"),
     };
   },
   props: ["minNav", "textWhite"],
@@ -212,6 +216,13 @@ export default {
     toggleSidebar() {
       this.navbarMinimize();
     },
+    logout() {
+      localStorage.removeItem("loggedIn")    
+      return this.$router.push('/sign-in')
+      axios.get('http://api.alumni.eduraya.co.id/api/logout', {headers: {'Authorization': 'Bearer '+ this.token}})
+        .then(() => {
+        })
+    }
   },
   components: {
     Breadcrumbs,
@@ -222,5 +233,10 @@ export default {
       return this.$route.name;
     },
   },
+  mounted(){
+    if(!this.loggedIn) {
+        return this.$router.push('/sign-in')
+    }
+  }
 };
 </script>

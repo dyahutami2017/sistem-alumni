@@ -48,7 +48,7 @@
                 />
               </div>
               <div class="photo">
-                <img src="/img/ava.1b72e298.jpg" />
+                <img :src="kartu.photo" />
               </div>
             </div>
           </div>
@@ -70,10 +70,12 @@ export default {
   },
   data() {
     return {
+      gagal: '',
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
       role: "user",
       val: "",
+      src: "",
       kartu: {
         name: '',
         birth_place: '',
@@ -87,6 +89,7 @@ export default {
         nim: '',
         faculty: '',
         departement: '',
+        photo: '',
       }
     };
   },
@@ -105,6 +108,7 @@ export default {
         this.kartu.nim = res.data.user.nim
         this.kartu.faculty = res.data.user.faculty
         this.kartu.departement = res.data.user.departement
+        this.kartu.photo = res.data.user.photo_url
         this.val = res.data.user.nik
         console.log(res.data)
       }).catch ((err) => {
@@ -130,7 +134,6 @@ export default {
         console.log(res.data);
       }).catch ((err) => {
         console.log(err.response.status)
-        // return err.response.status;
         // return err.response;
         //this.swalFailed();
       })
@@ -154,9 +157,6 @@ export default {
   beforeMount(){
     this.load();
     this.tracer();
-    // if(this.tracer_enterpreneur() == "404"){
-    //   this.swalFailed;
-    // };
     this.tracer_enterpreneur();
   },
   mounted: function () {

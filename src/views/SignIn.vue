@@ -3,13 +3,25 @@
   <!-- <navbar btnBackground="bg-gradient-warning" /> -->
   <div
     class="page-header align-items-start min-vh-100"
-    style="
-      background-image: url('/img/foto_gedung_rektorat.42054fea.png')
+    :style="
+      { backgroundImage: 'url('+ bg + ')' }
     "
   >
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
+        <div class="alert alert-danger alert-dismissible fade show mb-5" v-if="loginFailed" >
+            <span class="alert-text"><strong>Sign In Gagal !</strong> Mohon Masukkan Data Dengan Benar</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="alert alert-danger alert-dismissible fade show mb-5" v-if="dataKosong" >
+            <span class="alert-text"><strong>Sign In Gagal !</strong> Akun anda tidak terdaftar, silahkan lakukan sign up</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
         <div class="col-lg-4 col-md-8 col-12 mx-auto">
           <div class="card z-index-0 fadeIn3 fadeInBottom">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -119,6 +131,7 @@
 import setMaterialInput from "@/assets/js/material-input.js";
 import VmdButton from "@/components/VmdButton.vue";
 import axios from "axios";
+import bg from "@/assets/img/foto_gedung_rektorat.png";
 
 export default {
   name: "sign-in",
@@ -130,6 +143,12 @@ export default {
   },
   data() {
     return {
+      loggedIn: localStorage.getItem('loggedIn'),
+      token: localStorage.getItem('token'),
+      userid: localStorage.getItem('userid'),
+      dataKosong: null,
+      loginFailed: null,
+      bg,
       form: {
         username: "",
         password: "",
@@ -138,21 +157,41 @@ export default {
   },
   methods: {
     login() {
-      const url = "http://api.alumni.eduraya.co.id/api/login"; 
-      let self = this;
-      axios
-        .post(url, this.form)
-        .then(function (response) {
-          console.log(response.status);
-          if (response.status === 200) {
-            self.$router.push('/form_profile/'+response.data[0].user.id);
-          }
-        })
-        .catch((error) => alert(error.response.statusText+ ': Masukkan Data dengan Benar'));
+      if (this.form.username && this.form.password) {
+          axios.get('http://api.alumni.eduraya.co.id/sanctum/csrf-cookie')
+            .then(response => {
+              console.log(response)
+              axios.post('http://api.alumni.eduraya.co.id/api/login', {
+                  username: this.form.username,
+                  password: this.form.password
+              }).then(res => {
+                  console.log(res)
+                  if (res.status == '200') {
+                    localStorage.setItem("loggedIn", "true")
+                    localStorage.setItem("token", res.data[0].token)
+                    localStorage.setItem("userid", res.data[0].user.id)
+                    this.loggedIn = true
+                    this.token  = res.data[0].token;
+                    this.userid = res.data[0].user.id
+                    return this.$router.push('/form_profile/'+res.data[0].user.id)
+                  }
+                  else {
+                      this.loginFailed = true
+                  }
+              }).catch(error => {
+                  console.log(error)
+                  this.dataKosong = true
+              })
+          })
+      }
     },
   },
   mounted() {
     setMaterialInput();
+    if (this.loggedIn) {
+      return this.$router.push('/form_profile/' + this.userid)
+      // this.$router.go(-1);
+    }
   },
   beforeMount() {
     this.$store.state.hideConfigButton = true;

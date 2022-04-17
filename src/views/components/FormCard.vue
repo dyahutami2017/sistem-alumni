@@ -21,15 +21,15 @@
               <input type="text" class="form-control" v-model="profil.name" name="name" isrequired="true">
             </div>
           </div>
-          <div class="col-lg-4 col-sm-12">
+          <!-- <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">No Diploma</label><br/>
               <input type="text" class="form-control" v-model="profil.diploma_number" name="diploma_number" isrequired="true">
             </div>
-          </div>
+          </div> -->
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
-              <label class="label col-12">GPA</label><br/>
+              <label class="label col-12">IPK</label><br/>
               <input type="text" class="form-control" v-model="profil.gpa" name="gpa" isrequired="true">
             </div>
           </div>
@@ -122,13 +122,13 @@
               <input type="text" class="form-control" v-model="profil.social_media" name="social_media" isrequired="true">
             </div>
           </div>
-          <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-6 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Organisasi</label><br/>
               <input type="text" class="form-control" v-model="profil.organization" name="organization" isrequired="true">
             </div>
           </div>
-          <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-6 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Pencapaian</label><br/>
               <input type="text" class="form-control" v-model="profil.achievement" name="achievement" isrequired="true">
@@ -202,6 +202,7 @@ export default {
             photo_url: '',
             ktp_url: '',
             ijazah_url: '',
+            token: localStorage.getItem('token'),
             myValue: 'Pilih Fakultas',
             myValue2: 'Pilih Jurusan',
             // myValue3: 'Pilih Provinsi',
@@ -211,7 +212,7 @@ export default {
             //optionFakultas: [],
             profil:{
                 name:'',
-                diploma_number:'',
+                // diploma_number:'',
                 gpa:'',
                 nim:'',
                 nik:'',
@@ -239,7 +240,11 @@ export default {
     },
     methods: {
       load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ self.$route.params.id).then(res => {
+          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ self.$route.params.id, 
+          {
+            headers: {'Authorization': 'Bearer '+ this.token}
+          }
+          ).then(res => {
           self.profil.name = res.data.user.name 
           self.profil.nim = res.data.user.nim 
           self.profil.nik = res.data.user.nik 
@@ -250,7 +255,7 @@ export default {
           self.profil.phone_number = res.data.user.phone_number 
           self.profil.address = res.data.user.address 
           self.profil.email = res.data.user.email
-          self.profil.diploma_number = res.data.user.diploma_number
+          // self.profil.diploma_number = res.data.user.diploma_number
           self.profil.gpa = res.data.user.gpa
           self.profil.social_media = res.data.user.social_media
           self.profil.organization = res.data.user.organization
@@ -312,7 +317,7 @@ export default {
         formData.append('birth_date', self.profil.birth_date);
         formData.append('birth_place', self.profil.birth_place);
         formData.append('departement', self.profil.departement);
-        formData.append('diploma_number', self.profil.diploma_number);
+        // formData.append('diploma_number', self.profil.diploma_number);
         formData.append('email', self.profil.email);
         formData.append('entry_year', self.profil.entry_year);
         formData.append('faculty', self.profil.faculty);

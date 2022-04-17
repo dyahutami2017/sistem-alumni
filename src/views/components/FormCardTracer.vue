@@ -349,7 +349,7 @@ export default {
           this.tracer_w.job_matches = res.data.tracer_work.job_matches 
           this.tracer_w.start_working = res.data.tracer_work.start_working 
           this.tracer_w.get_job_from = res.data.tracer_work.get_job_from 
-          
+    
           $('.btnSave').hide()
           $('.btnUpdate').show()
         }).catch ((err) => {
