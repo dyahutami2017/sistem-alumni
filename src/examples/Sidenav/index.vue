@@ -14,7 +14,7 @@
         aria-hidden="true"
         id="iconSidenav"
       ></i>
-      <a class="m-0 navbar-brand" href="/">
+      <a class="pt-2 navbar-brand" href="/">
         <img
           :src="
             this.$store.state.sidebarType === 'bg-white' ||
@@ -37,8 +37,8 @@
 <script>
 import SidenavListAlumni from "./SidenavListAlumni.vue";
 import SidenavList from "./SidenavList.vue";
-import logo from "@/assets/img/uns_logo_white.png";
-import logoDark from "@/assets/img/uns_logo_white.png";
+import logo from "@/assets/img/logo_ika_uns.png";
+import logoDark from "@/assets/img/logo_ika_uns.png";
 
 export default {
   name: "index",
