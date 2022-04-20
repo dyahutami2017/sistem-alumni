@@ -6,7 +6,6 @@
         <div class="card">
           <div class="card-body">
             <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i> Print Kartu Alumni</a>
-            <a href="#" class="btn btn-primary" id="btnDownload"><i class="fa fa-print"></i> Print Kartu Alumni</a>
             <div id="print_kartu" style="font-size:18px;" hidden>
               <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
               <div class="top-first text-dark">
