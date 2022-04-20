@@ -105,6 +105,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 // import Navbar from "@/examples/PageLayout/Navbar.vue";
 import setMaterialInput from "@/assets/js/material-input.js";
 import VmdButton from "@/components/VmdButton.vue";
@@ -157,8 +158,38 @@ export default {
             self.$router.push("/form_profile/" + response.data.user.id);
           }
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error.response);
+          var obj = JSON.stringify(error.response.data)
+          var dt = JSON.parse(obj);
+          if(dt.name != undefined){
+            this.swalFailed(dt.name);
+          }
+          else if(dt.nik != undefined){
+            this.swalFailed(dt.nik);
+          }
+          else if(dt.nim != undefined){
+            this.swalFailed(dt.nim);
+          }
+          else if(dt.email != undefined){
+            this.swalFailed(dt.email);
+          }
+          else if(dt.password != undefined){
+            this.swalFailed(dt.password);
+          }
+        });
     },
+    swalFailed(text){
+      this.$swal({
+        title: 'Oops Maaf',
+        text: text,
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      })
+    }
   },
 };
 </script>

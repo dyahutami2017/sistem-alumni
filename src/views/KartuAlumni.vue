@@ -7,7 +7,7 @@
           <div class="card-body">
             <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i> Print Kartu Alumni</a>
             <div id="print_kartu" style="font-size:18px;" hidden>
-              <img src="../assets/img/E-Kartu.png" alt="" id="img_card">
+              <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
               <div class="top-first text-dark">
                 <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.name}}
               </div>
@@ -28,6 +28,9 @@
               </div>
               <div class="top-seventh text-dark">
                 <span style="display:inline-block;  width:80px; text-align:left"></span>12 September 2022
+              </div>
+              <div class="top-eight">
+                <vue3-barcode :value="val" :height="40" display-value="false"/>
               </div>
               <div class="qr_code">
                 <QRCodeVue3
@@ -62,11 +65,13 @@
 import $ from "jquery";
 import axios from "axios";
 import QRCodeVue3 from "qrcode-vue3";
+import Vue3Barcode from 'vue3-barcode'
 
 export default {
   name: "kartu-alumni",
   components: {
     QRCodeVue3,
+    Vue3Barcode
   },
   data() {
     return {
@@ -116,26 +121,13 @@ export default {
       })
     },
     tracer(){
-        axios.get('http://api.alumni.eduraya.co.id/api/tracer_w/'+ this.$route.params.id).then(res => {
+        axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
         console.log(res.data);
+        if(res.data.tracer_completed == 0){
+          this.swalFailed()
+        }
       }).catch ((err) => {
         console.log(err);
-      })
-    },
-    tracer_study(){
-        axios.get('http://api.alumni.eduraya.co.id/api/tracer_s/'+ this.$route.params.id).then(res => {
-        console.log(res.data);
-      }).catch ((err) => {
-        console.log(err);
-      })
-    },
-    tracer_enterpreneur(){
-        axios.get('http://api.alumni.eduraya.co.id/api/tracer_e/'+ this.$route.params.id).then(res => {
-        console.log(res.data);
-      }).catch ((err) => {
-        console.log(err.response.status)
-        // return err.response;
-        //this.swalFailed();
       })
     },
     swalFailed(){
@@ -157,7 +149,6 @@ export default {
   beforeMount(){
     this.load();
     this.tracer();
-    this.tracer_enterpreneur();
   },
   mounted: function () {
     $("#btnPrint").click(function() {
@@ -178,10 +169,11 @@ export default {
       frameDoc.document.write(".top-fifth { position: absolute; top: 221px; left: 80px; text-align: center; font-size:12px }");
       frameDoc.document.write(".top-sixth { position: absolute; top: 241px; left: 80px; text-align: center; font-size:12px }");
       frameDoc.document.write(".top-seventh { position: absolute; top: 276px; left: 80px; text-align: center; font-size:12px }");
+      frameDoc.document.write(".top-eight { position: absolute; top: 311px; left: 25px; text-align: center; font-size:12px }");
       frameDoc.document.write(".qr_code { position: absolute; top: 43%; left: 185px; text-align: center;}");
       frameDoc.document.write(".qr_code img { width:220px; height:220px }");
-      frameDoc.document.write(".photo { position: absolute; top: 150px; right: 170px; text-align: center;}");
-      frameDoc.document.write(".photo img { width:160px;}");
+      frameDoc.document.write(".photo { position: absolute; top: 144px; right: 172px; text-align: center;}");
+      frameDoc.document.write(".photo img { width:170px; height:200px}");
       frameDoc.document.write("</style>");
       frameDoc.document.write('</head><body>');
       //Append the external CSS file.

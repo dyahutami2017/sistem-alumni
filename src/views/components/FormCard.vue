@@ -21,12 +21,12 @@
               <input type="text" class="form-control" v-model="profil.name" name="name" isrequired="true">
             </div>
           </div>
-          <!-- <div class="col-lg-4 col-sm-12">
+          <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
-              <label class="label col-12">No Diploma</label><br/>
+              <label class="label col-12">No Ijazah</label><br/>
               <input type="text" class="form-control" v-model="profil.diploma_number" name="diploma_number" isrequired="true">
             </div>
-          </div> -->
+          </div>
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">IPK</label><br/>
@@ -122,13 +122,13 @@
               <input type="text" class="form-control" v-model="profil.social_media" name="social_media" isrequired="true">
             </div>
           </div>
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Organisasi</label><br/>
               <input type="text" class="form-control" v-model="profil.organization" name="organization" isrequired="true">
             </div>
           </div>
-          <div class="col-lg-6 col-sm-12">
+          <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Pencapaian</label><br/>
               <input type="text" class="form-control" v-model="profil.achievement" name="achievement" isrequired="true">
@@ -139,21 +139,39 @@
               <label class="label col-12">Foto</label><br/>
               <input type="file" class="form-control" name="foto" ref="file" id="file" isrequired="true" @change="uploadPhoto()">
             </div>
-            <img :src="photo_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
+            <div class="border p-2 mt-3">
+              <p>Preview:</p>
+              <template v-if="preview">
+                <img :src="preview" class="img-fluid" style="width:150px"/>
+              </template>
+            </div>
+            <!-- <img :src="photo_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px"> -->
           </div>
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">KTP</label><br/>
               <input type="file" class="form-control" name="ktp" ref="ktp" id="ktp" isrequired="true" @change="uploadKTP()">
             </div>
-            <img :src="ktp_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
+            <div class="border p-2 mt-3">
+              <p>Preview:</p>
+              <template v-if="preview_ktp">
+                <img :src="preview_ktp" class="img-fluid" style="width:150px"/>
+              </template>
+            </div>
+            <!-- <img :src="ktp_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px"> -->
           </div>
           <div class="col-lg-4 col-sm-12">
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Ijazah</label><br/>
               <input type="file" class="form-control" name="ijazah" ref="ijazah" id="ijazah" isrequired="true" @change="uploadIjazah()">
             </div>
-            <img :src="ktp_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px">
+            <div class="border p-2 mt-3">
+              <p>Preview:</p>
+              <template v-if="preview_ijazah">
+                <img :src="preview_ijazah" class="img-fluid" style="width:150px"/>
+              </template>
+            </div>
+            <!-- <img :src="ijazah_url" class="shadow-sm border-radius-sm" style="width:80px; margin-bottom:10px"> -->
           </div>
           <div class="col-lg-8"></div>
           <div class="col-lg-2 col-sm-6">
@@ -202,6 +220,9 @@ export default {
             photo_url: '',
             ktp_url: '',
             ijazah_url: '',
+            preview: null,
+            preview_ktp: null,
+            preview_ijazah: null,
             token: localStorage.getItem('token'),
             myValue: 'Pilih Fakultas',
             myValue2: 'Pilih Jurusan',
@@ -212,7 +233,7 @@ export default {
             //optionFakultas: [],
             profil:{
                 name:'',
-                // diploma_number:'',
+                diploma_number:'',
                 gpa:'',
                 nim:'',
                 nik:'',
@@ -255,7 +276,7 @@ export default {
           self.profil.phone_number = res.data.user.phone_number 
           self.profil.address = res.data.user.address 
           self.profil.email = res.data.user.email
-          // self.profil.diploma_number = res.data.user.diploma_number
+          self.profil.diploma_number = res.data.user.diploma_number
           self.profil.gpa = res.data.user.gpa
           self.profil.social_media = res.data.user.social_media
           self.profil.organization = res.data.user.organization
@@ -291,13 +312,35 @@ export default {
       uploadPhoto() {
         self.profil.photo = self.$refs.file.files[0];
         console.log(self.profil.photo);
+        if (self.$refs.file.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview = e.target.result;
+          }
+          reader.readAsDataURL(self.$refs.file.files[0]);
+        }
       },
       uploadKTP() {
         self.profil.identity_card = self.$refs.ktp.files[0];
         console.log(self.profil.identity_card);
+        if (self.$refs.ktp.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview_ktp = e.target.result;
+          }
+          reader.readAsDataURL(self.$refs.ktp.files[0]);
+        }
       },
       uploadIjazah() {
         self.profil.bachelor_certificate = self.$refs.ijazah.files[0];
+        console.log(self.profil.bachelor_certificate)
+        if (self.$refs.ijazah.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview_ijazah = e.target.result;
+          }
+          reader.readAsDataURL(self.$refs.ijazah.files[0]);
+        }
       },
       submit(){
         // this.$emit('save-profil', this.profil)
@@ -317,7 +360,7 @@ export default {
         formData.append('birth_date', self.profil.birth_date);
         formData.append('birth_place', self.profil.birth_place);
         formData.append('departement', self.profil.departement);
-        // formData.append('diploma_number', self.profil.diploma_number);
+        formData.append('diploma_number', self.profil.diploma_number);
         formData.append('email', self.profil.email);
         formData.append('entry_year', self.profil.entry_year);
         formData.append('faculty', self.profil.faculty);
@@ -359,9 +402,93 @@ export default {
             //   location.reload();
             // }
           })
-          .catch((error) => alert(error));
-      }
+          .catch(error => {
+            var obj = JSON.stringify(error.response.data)
+            var dt = JSON.parse(obj);
+            if(dt.name != undefined){
+              this.swalAlert(dt.name, 'Gagal', 'error');
+            }
+            else if(dt.email != undefined){
+              this.swalAlert(dt.email, 'Gagal', 'error');
+            }
+            else if(dt.nik != undefined){
+              this.swalAlert(dt.nik, 'Gagal', 'error');
+            }
+            else if(dt.nim != undefined){
+              this.swalAlert(dt.nim, 'Gagal', 'error');
+            }
+            else if(dt.faculty != undefined){
+              this.swalAlert(dt.faculty, 'Gagal', 'error');
+            }
+            else if(dt.departement != undefined){
+              this.swalAlert(dt.departement, 'Gagal', 'error');
+            }
+            else if(dt.entry_year != undefined){
+              this.swalAlert(dt.entry_year, 'Gagal', 'error');
+            }
+            else if(dt.graduate_year != undefined){
+              this.swalAlert(dt.graduate_year, 'Gagal', 'error');
+            }
+            else if(dt.birth_date != undefined){
+              this.swalAlert(dt.birth_date, 'Gagal', 'error');
+            }
+            else if(dt.birth_place != undefined){
+              this.swalAlert(dt.birth_place, 'Gagal', 'error');
+            }
+            else if(dt.gender != undefined){
+              this.swalAlert(dt.gender, 'Gagal', 'error');
+            }
+            else if(dt.address != undefined){
+              this.swalAlert(dt.address, 'Gagal', 'error');
+            }
+            else if(dt.phone_number != undefined){
+              this.swalAlert(dt.phone_number, 'Gagal', 'error');
+            }
+            else if(dt.social_media != undefined){
+              this.swalAlert(dt.social_media, 'Gagal', 'error');
+            }
+            else if(dt.gpa != undefined){
+              this.swalAlert(dt.gpa, 'Gagal', 'error');
+            }
+            else if(dt.diploma_number != undefined){
+              this.swalAlert(dt.diploma_number, 'Gagal', 'error');
+            }
+            else if(dt.organization != undefined){
+              this.swalAlert(dt.organization, 'Gagal', 'error');
+            }
+            else if(dt.achievement != undefined){
+              this.swalAlert(dt.achievement, 'Gagal', 'error');
+            }
+            else if(dt.photo != undefined){
+              this.swalAlert(dt.photo, 'Gagal', 'error');
+            }
+            else if(dt.identity_card != undefined){
+              this.swalAlert(dt.identity_card, 'Gagal', 'error');
+            }
+            else if(dt.bachelor_certificate != undefined){
+              this.swalAlert(dt.bachelor_certificate, 'Gagal', 'error');
+            }
+            else{
+              this.swalAlert(dt)
+            }
+          });
+      },
+      swalAlert(text,title,icon){
+        this.$swal({
+          title: title,
+          text: text,
+          icon: icon,
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        })
+      }     
     }
-  
 };
 </script>
+<style>
+.select2 {
+  width:100%!important;
+}
+</style>

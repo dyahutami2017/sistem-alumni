@@ -25,9 +25,7 @@
       :class="this.$store.state.isRTL ? 'text-start' : 'text-end'"
     >
       <p class="mb-0">
-        <span class="text-success text-sm font-weight-bolder">{{
-          percentage
-        }}</span>
+        <span :class="textCap">{{ percentage }}</span>
         {{ detail }}
       </p>
     </div>
@@ -67,6 +65,10 @@ export default {
     iconBackground: {
       type: String,
       default: "bg-white",
+    },
+    textCap: {
+      type: String,
+      default: "text-success text-sm font-weight-bolder",
     },
   },
 };

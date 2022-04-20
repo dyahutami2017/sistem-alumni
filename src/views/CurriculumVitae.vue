@@ -11,8 +11,8 @@
               <hr>
               <b>PERSONAL INFORMATION</b>
               <hr>
-              <table style="width:50%">
-                  <img :src="cv.photo" align="right" width="142" height="142" style="position:absolute; right:10%">
+              <table style="width:50%; height:150px">
+                  <img :src="cv.photo" align="right" style="position:absolute; right:10%; height: 142px; width: 142px;">
                 <tr>
                   <th></th>
                   <th></th>
@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td>{{cv.entry_year}} - {{cv.graduate_year}}</td>
-                    <td>Universitas Negeri Surakarta</td>
+                    <td>Universitas Sebelas Maret</td>
                 </tr>
               </table>            
               <hr>
@@ -126,23 +126,14 @@ export default {
           this.cv.achievement = res.data.user.achievement
           this.cv.photo = res.data.user.photo_url
           console.log(res.data)
-          if(res.data.user.validate == '0'){
-            this.$swal({
-              title: 'Oops Maaf',
-              text: "Mohon Lengkapi Data Profil!",
-              icon: 'warning',
-              showCancelButton: false,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'OK'
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.$router.push('/form_profile/'+this.$route.params.id);
-              }
-            })
-          }
         }).catch ((err) => {
           console.log(err);
+        })
+      },
+      checkProfile(){
+        axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
+        console.log(res.data);
+        if(res.data.profile_completed == 0){
           this.$swal({
             title: 'Oops Maaf',
             text: "Mohon Lengkapi Data Profil!",
@@ -156,11 +147,24 @@ export default {
               this.$router.push('/form_profile/'+this.$route.params.id);
             }
           })
-        })
-      },
+        }
+      }).catch ((err) => {
+        console.log(err);
+        this.$swal({
+            title: 'Oops Maaf',
+            text: "Terdapat Masalah Pada Jaringan!",
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+          })
+      })
+    },
   },
   mounted: function () {
     this.load();
+    this.checkProfile();
     $("#btnPrint").click(function() {
       var divContents = document.getElementById("print_cv").innerHTML;
       var a = window.open("", "", "height=1000, width=1000");

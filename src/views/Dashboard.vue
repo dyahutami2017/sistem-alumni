@@ -8,6 +8,7 @@
               v-if="profil_lengkap === 'ya'"
               value="Profil Alumni"
               iconName="person"
+              textCap="text-success text-sm font-weight-bolder"
               percentage="Profil Sudah Lengkap"
               iconClass="text-white"
               iconBackground="bg-gradient-success"
@@ -16,6 +17,7 @@
               v-else-if="profil_lengkap === 'tidak'"
               value="Profil Alumni"
               iconName="person"
+              textCap="text-danger text-sm font-weight-bolder"
               percentage="Profil Belum Lengkap"
               iconClass="text-white"
               iconBackground="bg-gradient-primary"
@@ -26,6 +28,7 @@
               v-if="survey_lengkap === 'ya'"
               value="Tracer Study"
               iconName="location_searching"
+              textCap="text-success text-sm font-weight-bolder"
               percentage="Tracer Study Sudah Terisi"
               iconClass="text-white"
               iconBackground="bg-gradient-success"
@@ -34,6 +37,7 @@
               v-else-if="survey_lengkap === 'tidak'"
               value="Tracer Study"
               iconName="location_searching"
+              textCap="text-danger text-sm font-weight-bolder"
               percentage="Tracer Study Belum Terisi"
               iconClass="text-white"
               iconBackground="bg-gradient-primary"
@@ -42,9 +46,8 @@
           <div class="col-lg-4 col-md-6 col-sm-6">
             <mini-cards
               value="Update Tracer Study"
-              :exp="exp_date"
               iconName="info"
-              percentage="Perlu Diupdate"
+              :percentage="exp_date"
               iconClass="text-white"
               iconBackground="bg-gradient-warning"
             />
@@ -100,26 +103,52 @@ export default {
   },
   data() {
     return {
-      profil_lengkap: "tidak",
+      profil_lengkap: "",
       survey_lengkap: "",
       exp_date: "",
     };
   },
   methods: {
-    load() {
-          axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
-          this.tracer = res.data
+    // load() {
+    //       axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+    //       this.tracer = res.data
+    //       console.log(res.data);
+    //       this.exp_date = res.data.tracer_study.created_at;          
+    //       this.survey_lengkap = "ya";          
+    //     }).catch ((err) => {
+    //       console.log(err);
+    //       this.survey_lengkap = "tidak";          
+    //     })
+    //   },
+    checkData() {
+          axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
           console.log(res.data);
-          this.exp_date = res.data.tracer_study.created_at;          
-          this.survey_lengkap = "ya";          
+          if(res.data.profile_completed == 1){
+            this.profil_lengkap = 'ya'
+          }
+          else{
+            this.profile_lengkap = 'tidak'
+          }
+          if(res.data.tracer_completed == 1){
+            this.survey_lengkap = 'ya'
+          }
+          else{
+            this.survey_lengkap = 'tidak'
+          }
+          if(res.data.expired_date != null){
+            this.exp_date = res.data.expired_date
+          }
+          else{
+            this.exp_date = "Belum Ada Tanggal Kadaluarsa"
+          }
         }).catch ((err) => {
           console.log(err);
-          this.survey_lengkap = "tidak";          
         })
       },
   },
   mounted() {
-    this.load();
+    // this.load();
+    this.checkData();
     // window.location.href = "/form_profile";
     // $("#modalDokumen").addClass("show");
     // $(".modal").css("display", "block");
