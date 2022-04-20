@@ -6,6 +6,7 @@
         <div class="card">
           <div class="card-body">
             <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i> Print Kartu Alumni</a>
+            <a href="#" class="btn btn-primary" id="btnDownload"><i class="fa fa-print"></i> Print Kartu Alumni</a>
             <div id="print_kartu" style="font-size:18px;" hidden>
               <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
               <div class="top-first text-dark">
@@ -66,6 +67,7 @@ import $ from "jquery";
 import axios from "axios";
 import QRCodeVue3 from "qrcode-vue3";
 import Vue3Barcode from 'vue3-barcode'
+import { jsPDF } from "jspdf";
 
 export default {
   name: "kartu-alumni",
@@ -187,6 +189,17 @@ export default {
         window.frames["frame1"].print();
         frame1.remove();
       }, 500);
+    });
+    var specialElementHandlers = {
+        '#editor': function (element,renderer) {
+            return true;
+        }
+    };
+    $("#btnDownload").click(function() {
+        const doc = new jsPDF();
+
+        doc.text('<p>HY</p>', 10, 10);
+        doc.save("a4.pdf");
     })
    
   },

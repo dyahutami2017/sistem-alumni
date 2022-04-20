@@ -318,59 +318,15 @@ export default {
       }
   },
   methods: {
-      add_bekerja() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_w";
-        axios
-          .post(url, this.tracer_w)
-          .then(function (response) {
-            // alert(response.data.messege);
-             this.swalAlert(response.data.messege, 'Sukses', 'success')
-          })
-          .catch(error => {
-            console.log(error.response);
-            var obj = JSON.stringify(error.response.data)
-            var dt = JSON.parse(obj);
-            if(dt.company_name != undefined){
-              this.swalAlert(dt.company_name, 'Gagal', 'error');
-            }
-            else if(dt.company_address != undefined){
-              this.swalAlert(dt.company_address, 'Gagal', 'error');
-            }
-            else if(dt.company_sector != undefined){
-              this.swalAlert(dt.company_sector, 'Gagal', 'error');
-            }
-            else if(dt.position != undefined){
-              this.swalAlert(dt.position, 'Gagal', 'error');
-            }
-            else if(dt.contract_status != undefined){
-              this.swalAlert(dt.contract_status, 'Gagal', 'error');
-            }
-            else if(dt.salary != undefined){
-              this.swalAlert(dt.salary, 'Gagal', 'error');
-            }
-            else if(dt.job_matches != undefined){
-              this.swalAlert(dt.job_matches, 'Gagal', 'error');
-            }
-            else if(dt.start_working != undefined){
-              this.swalAlert(dt.start_working, 'Gagal', 'error');
-            }
-            else if(dt.get_job_from != undefined){
-              this.swalAlert(dt.get_job_from, 'Gagal', 'error');
-            }
-            else{
-              this.swalAlert(dt)
-            }
-          });
-      },
       update_bekerja() {
         const url = "http://api.alumni.eduraya.co.id/api/tracer_w/"+ this.$route.params.id;
         axios
           .post(url, this.tracer_w)
-          .then(function (response) {
-            // alert(response.data.messege);
-             this.swalAlert(response.data.messege, 'Sukses', 'success')
+          .then((response) => {
+            this.swalAlert(response.data.messege, 'Sukses', 'success');
           })
-          .catch(error => {
+          .catch((error) => {
+            console.log(error)
             var obj = JSON.stringify(error.response.data)
             var dt = JSON.parse(obj);
             if(dt.company_name != undefined){
@@ -403,7 +359,7 @@ export default {
             else{
               this.swalAlert(dt)
             }
-          });
+          })
       },
       load(){
           axios.get('http://api.alumni.eduraya.co.id/api/tracer_w/'+ this.$route.params.id).then(res => {
@@ -427,50 +383,11 @@ export default {
           console.log(err);
         })
       },
-
-      add_study() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_s";
-        console.log(this.tracer_s)
-        axios
-          .post(url, this.tracer_s)
-          .then(function (response) {
-            // alert(response.data.messege);
-             this.swalAlert(response.data.messege, 'Sukses', 'success')
-          })
-          .catch(error => {
-            var obj = JSON.stringify(error.response.data)
-            var dt = JSON.parse(obj);
-            if(dt.university_name != undefined){
-              this.swalAlert(dt.university_name, 'Gagal', 'error');
-            }
-            else if(dt.university_address != undefined){
-              this.swalAlert(dt.university_address, 'Gagal', 'error');
-            }
-            else if(dt.study_location != undefined){
-              this.swalAlert(dt.study_location, 'Gagal', 'error');
-            }
-            else if(dt.departement != undefined){
-              this.swalAlert(dt.departement, 'Gagal', 'error');
-            }
-            else if(dt.entry_year != undefined){
-              this.swalAlert(dt.entry_year, 'Gagal', 'error');
-            }
-            else if(dt.graduate_year != undefined){
-              this.swalAlert(dt.graduate_year, 'Gagal', 'error');
-            }
-            else if(dt.study_matches != undefined){
-              this.swalAlert(dt.study_matches, 'Gagal', 'error');
-            }
-            else{
-              this.swalAlert(dt)
-            }
-          });
-      },
       update_study() {
         const url = "http://api.alumni.eduraya.co.id/api/tracer_s/"+ this.$route.params.id;
         axios
           .put(url, this.tracer_s)
-          .then(function (response) {
+          .then((response) => {
             // alert(response.data.messege);
              this.swalAlert(response.data.messege, 'Sukses', 'success')
           })
@@ -523,52 +440,11 @@ export default {
           console.log(err);
         })
       },
-      add_usaha() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_e";
-        axios
-          .post(url, this.tracer_e)
-          .then(function (response) {
-            // alert(response.data.messege);
-             this.swalAlert(response.data.messege, 'Sukses', 'success')
-          })
-          .catch(error => {
-            console.log(error.response)
-            var obj = JSON.stringify(error.response.data)
-            var dt = JSON.parse(obj);
-            if(dt.business_name != undefined){
-              this.swalAlert(dt.business_name, 'Gagal', 'error');
-            }
-            else if(dt.business_address != undefined){
-              this.swalAlert(dt.business_address, 'Gagal', 'error');
-            }
-            else if(dt.business_sector != undefined){
-              this.swalAlert(dt.business_sector, 'Gagal', 'error');
-            }
-            else if(dt.business_phone != undefined){
-              this.swalAlert(dt.business_phone, 'Gagal', 'error');
-            }
-            else if(dt.establish_year != undefined){
-              this.swalAlert(dt.establish_year, 'Gagal', 'error');
-            }
-            else if(dt.capital_source != undefined){
-              this.swalAlert(dt.capital_source, 'Gagal', 'error');
-            }
-            else if(dt.income != undefined){
-              this.swalAlert(dt.income, 'Gagal', 'error');
-            }
-            else if(dt.business_matches != undefined){
-              this.swalAlert(dt.business_matches, 'Gagal', 'error');
-            }
-            else{
-              this.swalAlert(dt)
-            }
-          });
-      },
       update_usaha() {
         const url = "http://api.alumni.eduraya.co.id/api/tracer_e/"+ this.$route.params.id;
         axios
           .put(url, this.tracer_e)
-          .then(function (response) {
+          .then((response) => {
             // alert(response.data.messege);
              this.swalAlert(response.data.messege, 'Sukses', 'success')
           })
@@ -627,16 +503,16 @@ export default {
         })
       },
       swalAlert(text,title,icon){
-      this.$swal({
-        title: title,
-        text: text,
-        icon: icon,
-        showCancelButton: false,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'OK'
-      })
-    }
+        this.$swal({
+          title: title,
+          text: text,
+          icon: icon,
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        })
+      }
   },
   mounted() {
     this.load();

@@ -152,10 +152,19 @@ export default {
       let self = this;
       axios
         .post(url, this.register)
-        .then(function (response) {
-          //console.log(response);
+        .then((response) => {
+          console.log(response);
           if (response.status === 201) {
             self.$router.push("/form_profile/" + response.data.user.id);
+            this.$swal({
+              title: 'Sukses',
+              text: response.data.messege+', silahkan sign-in',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'OK'
+            })
           }
         })
         .catch((error) => {
