@@ -51,7 +51,7 @@
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Status Kontrak</label><br/>
               <select name="status_kontrak" id="status_kontrak" class="form-control" v-model="tracer_w.contract_status">
-                <option value="Karyawan Tetap (PKWTT)">Karyawan Tetap (PKWTT)</option>
+                <option value="Karyawan Tetap">Karyawan Tetap</option>
                 <option value="Karyawan Tidak Tetap">Karyawan Tidak Tetap</option>
                 <option value="Karyawan Paruh Waktu">Karyawan Paruh Waktu</option>
                 <option value="Outsourcing">Outsourcing</option>
