@@ -6,7 +6,8 @@
         <div class="card">
           <div class="card-body">
             <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i> Print Kartu Alumni</a>
-            <div id="print_kartu" style="font-size:18px;" hidden>
+            <!-- <a href="#" class="btn btn-primary" id="btnDownload" @click="generate()"><i class="fa fa-print"></i> Print Kartu Alumni</a> -->
+            <div id="print_kartu" ref="testHtml" style="font-size:18px;" hidden>
               <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
               <div class="top-first text-dark">
                 <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.name}}
@@ -27,7 +28,7 @@
                 <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.graduate_year}}
               </div>
               <div class="top-seventh text-dark">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>12 September 2022
+                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.expired_date}}
               </div>
               <div class="top-eight">
                 <vue3-barcode :value="val" :height="40" display-value="false"/>
@@ -61,18 +62,20 @@
   </div>
 </template>
 <script>
+
 /* eslint-disable */
 import $ from "jquery";
 import axios from "axios";
 import QRCodeVue3 from "qrcode-vue3";
 import Vue3Barcode from 'vue3-barcode'
 import { jsPDF } from "jspdf";
-
+import VueHtml2pdf from "vue-html2pdf"
 export default {
   name: "kartu-alumni",
   components: {
     QRCodeVue3,
-    Vue3Barcode
+    Vue3Barcode,
+    VueHtml2pdf
   },
   data() {
     return {
@@ -96,6 +99,7 @@ export default {
         faculty: '',
         departement: '',
         photo: '',
+        expired_date: '',
       }
     };
   },
@@ -104,9 +108,7 @@ export default {
         axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
         this.kartu.name = res.data.user.name 
         this.kartu.birth_place = res.data.user.birth_place 
-        this.kartu.birth_date =  res.data.user.birth_date
         this.kartu.entry_year = res.data.user.entry_year 
-        this.kartu.graduate_year = res.data.user.graduate_year 
         this.kartu.phone_number = res.data.user.phone_number 
         this.kartu.address = res.data.user.address 
         this.kartu.email = res.data.user.email
@@ -116,6 +118,17 @@ export default {
         this.kartu.departement = res.data.user.departement
         this.kartu.photo = res.data.user.photo_url
         this.val = res.data.user.nik
+        //tgl lahir
+        const birth = res.data.user.birth_date
+        const [year,month,date] = birth.split("-")
+        const result_birth = [date,month,year].join("-")
+        this.kartu.birth_date = result_birth
+        //tahun lulus
+        const graduate = res.data.user.graduate_year
+        const [year_g,month_g,date_g] = graduate.split("-")
+        const result_graduate = [date_g,month_g,year_g].join("-")
+        this.kartu.graduate_year = result_graduate
+
         console.log(res.data)
       }).catch ((err) => {
         console.log(err);
@@ -124,6 +137,10 @@ export default {
     tracer(){
         axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
         console.log(res.data);
+        const exp = res.data.expired_date
+        const [year,month,date] = exp.split("-")
+        const result = [date,month,year].join("-")
+        this.kartu.expired_date = result
         if(res.data.tracer_completed == 0){
           this.swalFailed()
         }
@@ -145,7 +162,22 @@ export default {
           this.$router.push('/tracer_study/'+this.$route.params.id);
         }
       })
-    }
+    },
+    generate(){
+      this.$refs.testHtml.generatePdf()
+      // console.log(document.getElementById("print_kartu").innerHTML);
+      // window.html2canvas = html2canvas;
+      // var doc = new jsPDF('p','pt','a4');
+
+      // doc.html(document.getElementById("print_kartu").innerHTML, {
+      //   callback: function (doc) {
+      //     doc.save();
+      //   },
+      //   x: 10,
+      //   y: 10
+      // });
+      
+    },
   },
   beforeMount(){
     this.load();
@@ -188,19 +220,17 @@ export default {
         window.frames["frame1"].print();
         frame1.remove();
       }, 500);
-    });
-    var specialElementHandlers = {
-        '#editor': function (element,renderer) {
-            return true;
-        }
-    };
-    $("#btnDownload").click(function() {
-        const doc = new jsPDF();
+    }); 
+    // $("#btnDownload").click(function() {  
+    //   var doc = new jsPDF("p", "mm", "a4");
 
-        doc.text('<p>HY</p>', 10, 10);
-        doc.save("a4.pdf");
-    })
-   
+    //   doc.html(document.getElementById("print_kartu").innerHTML, {
+    //     callback: function (doc) {
+    //       doc.save();
+    //     },
+    //     'width': 170,
+    //   });
+    // })
   },
 };
 </script>

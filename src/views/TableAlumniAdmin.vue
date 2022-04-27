@@ -8,7 +8,23 @@
             <div
               class="bg-gradient-info shadow-light border-radius-lg pt-4 pb-3"
             >
-              <h6 class="text-white text-capitalize ps-3" >Data Alumni</h6>
+              <h6 class="text-white text-capitalize ps-3" >Data Alumni
+                <!-- <input
+                  class="btn btn-primary btn-sm mb-1"
+                  target=""
+                  style="float: right; margin-right: 10px"
+                  type="file"
+                  @change="previewFiles"
+                /> -->
+                <input
+                  class="btn btn-primary btn-sm mb-1"
+                  target=""
+                  style="float: right; margin-right: 10px"
+                  type="file"
+                  ref="files"
+                  @change="uploadFiles"
+                />
+              </h6>
             </div>
           </div>
           <div class="card-body pb-1">
@@ -243,7 +259,7 @@
                             alt="user"
                           />
                           <img v-else
-                            src="/img/user.4968cec9.png"
+                            :src="ava"
                             class="avatar avatar-sm me-3 border-radius-lg"
                             alt="user"
                           />
@@ -375,7 +391,9 @@
 import Select2 from 'vue3-select2-component';
 import VmdButton from "@/components/VmdButton.vue";
 import axios from "axios";
+import ava from "@/assets/img/user.png";
 // import $ from "jquery";
+var XLSX = require("xlsx");
 
 export default {
   name: "table-alumni",
@@ -393,6 +411,8 @@ export default {
             optionsJurusan: ['Pilih Jurusan','Teknik Informatika', 'Teknik Mesin', 'Seni Rupa', 'Ekonomi Bisnis', 'Pendidikan Ilmu Sosial'],
             optionsTahunLulus: ['Pilih Tahun','2022', '2021', '2020', '2019', '2018'], // or [{id: key, text: value}, {id: key, text: value}]
             alumnis:[],
+            profil:'',
+            ava
           }
     },
     methods: {
@@ -412,10 +432,103 @@ export default {
             this.load()
             let index = this.alumnis.indexOf(alumni.id)
             this.alumnis.splice(index,1)
+            this.swalAlert(res.data.messege,'Sukses','success')
         }).catch ((err) => {
           console.log(err);
         })
       },
+      swalAlert(text,title,icon){
+        this.$swal({
+          title: title,
+          text: text,
+          icon: icon,
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        })
+      },
+      previewFiles(e) {
+        var input = e.target;
+        var reader = new FileReader();
+        reader.onload = () => {
+          var fileData = reader.result;
+          var wb = XLSX.read(fileData, {type : 'binary'});
+          wb.SheetNames.forEach((sheetName) => {
+            var rowObj =XLSX.utils.sheet_to_json(wb.Sheets[sheetName]);	        
+            // this.excelData = JSON.stringify(rowObj)
+            var obj = JSON.stringify(rowObj)
+            var dt = JSON.parse(obj);
+            for(var i = 0; i < dt.length; i++){
+              this.profil.push({
+                "name" : dt[i].nama,
+                "email" : dt[i].email,
+                "nik" : dt[i].nik,
+                "nim" : dt[i].nim,
+                "faculty" : dt[i].fakultas,
+                "departement" : dt[i].jurusan,
+                "entry_year" : dt[i].tahun_masuk,
+                "graduate_year" : dt[i].tahun_lulus,
+                "birth_date" : dt[i].tanggal_lahir.split("-").reverse().join("-"),
+                "birth_place" : dt[i].tempat_lahir,
+                "gender" : dt[i].jenis_kelamin,
+                "address" : dt[i].alamat_tinggal,
+                "phone_number" : dt[i].no_hp,
+                "social_media" : dt[i].sosial_media,
+                "gpa" : dt[i].ipk,
+                "diploma_number" : dt[i].no_ijazah,
+                "organization" : dt[i].organisasi,
+                "achievement" : dt[i].pencapaian,
+              })
+            }
+            console.log(this.profil)
+            const url = "http://api.alumni.eduraya.co.id/api/alumni/";
+            axios
+            .post(url, this.profil)
+            .then((response) => {
+              console.log(response)
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          })
+        };
+        reader.readAsBinaryString(input.files[0]);
+      },
+      uploadFiles() {
+        let self = this;
+        self.profil = self.$refs.files.files[0];
+        if (self.$refs.files.files[0]) {
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            console.log(self.profil)
+            // this.preview_ijazah = e.target.result;
+          }
+          reader.readAsDataURL(self.$refs.files.files[0]);
+        }
+        let formData = new FormData();
+        formData.append('file', self.profil);
+        const url = "http://api.alumni.eduraya.co.id/api/import/";
+        axios
+          .post(url, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+          .then(function (response) {
+            console.log(response)
+            self.swalAlert(response.data.messege, 'Sukses', 'success')
+            location.reload();
+          }).catch(error => {
+            console.log(error)
+            var obj = JSON.stringify(error.response.data)
+            var dt = JSON.parse(obj);
+            if(dt.file != undefined){
+              this.swalAlert(dt.file, 'Gagal', 'error');
+            }
+          })
+      },
+
     },
     mounted() {
       this.load();

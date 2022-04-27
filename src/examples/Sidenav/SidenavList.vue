@@ -97,6 +97,32 @@
           </template>
         </sidenav-collapse>
       </li> -->
+      <li class="nav-item">
+        <sidenav-collapse
+          url="#"
+          :aria-controls="''"
+          v-bind:collapse="false"
+          collapseRef="/admin/data_fakultas"
+          navText="Fakultas"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">apartment</i>
+          </template>
+        </sidenav-collapse>
+      </li>
+      <li class="nav-item">
+        <sidenav-collapse
+          url="#"
+          :aria-controls="''"
+          v-bind:collapse="false"
+          collapseRef="/admin/data_jurusan"
+          navText="Jurusan"
+        >
+          <template v-slot:icon>
+            <i class="material-icons-round opacity-10 fs-5">apartment</i>
+          </template>
+        </sidenav-collapse>
+      </li>
       <!-- <li class="nav-item">
         <sidenav-collapse
           url="#"

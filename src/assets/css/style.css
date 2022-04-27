@@ -64,43 +64,43 @@
   .top-first {
     position: absolute;
     top: 163px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-second {
     position: absolute;
     top: 190px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-third {
     position: absolute;
     top: 214px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-fourth {
     position: absolute;
     top: 236px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-fifth {
     position: absolute;
     top: 260px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-sixth {
     position: absolute;
     top: 285px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .top-seventh {
     position: absolute;
     top: 332px;
-    left: 184px;
+    left: 230px;
     text-align: center;
   }
   .qr_code {
@@ -202,3 +202,83 @@
     width: 230px;
   }
 }
+
+#print_kartu {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+#img_card{
+  width: 723.19px;
+  height: 913.05px;
+}
+
+.top-first {
+  position: absolute;
+  top: 163px;
+  left: 230px;
+  text-align: center;
+}
+.top-second {
+  position: absolute;
+  top: 190px;
+  left: 230px;
+  text-align: center;
+}
+.top-third {
+  position: absolute;
+  top: 214px;
+  left: 230px;
+  text-align: center;
+}
+.top-fourth {
+  position: absolute;
+  top: 236px;
+  left: 230px;
+  text-align: center;
+}
+.top-fifth {
+  position: absolute;
+  top: 260px;
+  left: 230px;
+  text-align: center;
+}
+.top-sixth {
+  position: absolute;
+  top: 285px;
+  left: 230px;
+  text-align: center;
+}
+.top-seventh {
+  position: absolute;
+  top: 332px;
+  left: 230px;
+  text-align: center;
+}
+.top-eight { 
+  position: absolute;
+  top: 380px; 
+  left: 165px; 
+  text-align: center; 
+  font-size:12px 
+}
+.qr_code {
+  position: absolute;
+  top: 515px;
+  left: 360px;
+  text-align: center;
+}
+
+.qr_code img{
+  width:270px; 
+  height:270px
+}
+.photo {
+  position: absolute;
+  top: 168px;
+  right: 294px;
+  width: 80px;
+  text-align: center;
+}
+.photo img { width:215px; height:253px}

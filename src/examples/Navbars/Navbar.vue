@@ -204,11 +204,28 @@ export default {
       showMenu: false,
       loggedIn: localStorage.getItem("loggedIn"),
       token: localStorage.getItem("token"),
+      timerCount: 3600,
     };
   },
   props: ["minNav", "textWhite"],
   created() {
     this.minNav;
+  },
+   watch: {
+      timerCount: {
+          handler(value) {
+              if (value > 0) {
+                  setTimeout(() => {
+                      this.timerCount--;
+                  }, 1000);
+              }
+              if(value == 1) {
+                localStorage.removeItem("loggedIn")    
+                return this.$router.push('/sign-in')
+              }
+          },
+          immediate: true
+      }
   },
   methods: {
     ...mapMutations(["navbarMinimize", "toggleConfigurator"]),
@@ -234,8 +251,15 @@ export default {
     },
   },
   mounted(){
-    if(!this.loggedIn) {
-        return this.$router.push('/sign-in')
+    var currentUrl = window.location.pathname;
+    var url_first = currentUrl.split("/");
+    var role = url_first[1];
+
+    if(!this.loggedIn && role != 'admin') {
+        return this.$router.push('/sign-in') 
+    }
+    else if(!this.loggedIn && role == 'admin'){
+       return this.$router.push('/admin/sign-in') 
     }
   }
 };

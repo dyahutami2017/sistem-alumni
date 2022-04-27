@@ -17,6 +17,8 @@ import FormTracer from "../views/FormTracer.vue";
 import FormAkun from "../views/FormAkun.vue";
 import FormAkunAdmin from "../views/FormAkunAdmin.vue";
 import TableUser from "../views/TableUser.vue";
+import TableFakultas from "../views/TableFakultas.vue";
+import TableJurusan from "../views/TableJurusan.vue";
 import cv from "../views/CurriculumVitae.vue";
 import KartuAlumni from "../views/KartuAlumni.vue";
 
@@ -100,6 +102,16 @@ const routes = [
     path: "/admin/data_user",
     name: "Data User",
     component: TableUser,
+  },
+  {
+    path: "/admin/data_fakultas",
+    name: "Fakultas",
+    component: TableFakultas,
+  },
+  {
+    path: "/admin/data_jurusan",
+    name: "Jurusan",
+    component: TableJurusan,
   },
   {
     path: "/setting_account/:id",

@@ -127,7 +127,7 @@ export default {
             this.profil_lengkap = 'ya'
           }
           else{
-            this.profile_lengkap = 'tidak'
+            this.profil_lengkap = 'tidak'
           }
           if(res.data.tracer_completed == 1){
             this.survey_lengkap = 'ya'

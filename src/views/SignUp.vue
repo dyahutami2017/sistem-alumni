@@ -68,8 +68,14 @@
                       </div>
                       <div class="mb-3">
                         <div class="input-group input-group-outline my-3">
-                            <label class="form-label">password</label>
+                            <label class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" v-model="register.password">
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <div class="input-group input-group-outline my-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" name="confirm_password" v-model="register.confirm_password">
                         </div>
                       </div>
                       <div class="text-center">
@@ -126,6 +132,7 @@ export default {
         nim: "",
         email: "",
         password: "",
+        confirm_password: "",
       },
     };
   },
@@ -148,45 +155,50 @@ export default {
   },
   methods: {
     add_alumni() {
-      const url = "http://api.alumni.eduraya.co.id/api/register";
-      let self = this;
-      axios
-        .post(url, this.register)
-        .then((response) => {
-          console.log(response);
-          if (response.status === 201) {
-            self.$router.push("/form_profile/" + response.data.user.id);
-            this.$swal({
-              title: 'Sukses',
-              text: response.data.messege+', silahkan sign-in',
-              icon: 'success',
-              showCancelButton: false,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'OK'
-            })
-          }
-        })
-        .catch((error) => {
-          console.log(error.response);
-          var obj = JSON.stringify(error.response.data)
-          var dt = JSON.parse(obj);
-          if(dt.name != undefined){
-            this.swalFailed(dt.name);
-          }
-          else if(dt.nik != undefined){
-            this.swalFailed(dt.nik);
-          }
-          else if(dt.nim != undefined){
-            this.swalFailed(dt.nim);
-          }
-          else if(dt.email != undefined){
-            this.swalFailed(dt.email);
-          }
-          else if(dt.password != undefined){
-            this.swalFailed(dt.password);
-          }
-        });
+      if(this.register.password != this.register.confirm_password){
+        this.swalFailed('Confirmasi Password Anda Tidak Sama!');
+      }
+      else{
+        const url = "http://api.alumni.eduraya.co.id/api/register";
+        let self = this;
+        axios
+          .post(url, this.register)
+          .then((response) => {
+            console.log(response);
+            if (response.status === 201) {
+              self.$router.push("/form_profile/" + response.data.user.id);
+              this.$swal({
+                title: 'Sukses',
+                text: response.data.messege+', silahkan sign-in',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+              })
+            }
+          })
+          .catch((error) => {
+            console.log(error.response);
+            var obj = JSON.stringify(error.response.data)
+            var dt = JSON.parse(obj);
+            if(dt.name != undefined){
+              this.swalFailed(dt.name);
+            }
+            else if(dt.nik != undefined){
+              this.swalFailed(dt.nik);
+            }
+            else if(dt.nim != undefined){
+              this.swalFailed(dt.nim);
+            }
+            else if(dt.email != undefined){
+              this.swalFailed(dt.email);
+            }
+            else if(dt.password != undefined){
+              this.swalFailed(dt.password);
+            }
+          });
+      }
     },
     swalFailed(text){
       this.$swal({

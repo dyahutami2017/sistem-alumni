@@ -29,7 +29,7 @@
                 class="bg-gradient-info shadow-success border-radius-lg py-3 pe-1"
               >
                 <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">
-                  Sistem Alumni
+                  Sistem Alumni 
                 </h4>
                 {{}}
               </div>
@@ -167,6 +167,7 @@ export default {
               }).then(res => {
                   console.log(res)
                   if (res.status == '200') {
+                    var self = this;
                     localStorage.setItem("loggedIn", "true")
                     localStorage.setItem("token", res.data[0].token)
                     localStorage.setItem("userid", res.data[0].user.id)

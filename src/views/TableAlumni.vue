@@ -325,7 +325,7 @@
 import Select2 from 'vue3-select2-component';
 import VmdButton from "@/components/VmdButton.vue";
 // import $ from "jquery";
-
+var XLSX = require("xlsx");
 export default {
   name: "table-alumni",
   components: {

@@ -19,7 +19,7 @@
                   <i class="fa fa-plus"></i>Tambah</a
                 >
                 <input
-                  class="btn btn-primary mb-1"
+                  class="btn btn-primary btn-sm mb-1"
                   target=""
                   style="float: right; margin-right: 10px"
                   type="file"
@@ -150,24 +150,7 @@ export default {
   },
   data() {
         return {
-            users:[
-              {
-                id: "1",
-                nama: "Super Admin",
-                jenis_pengguna: "Super Admin",
-                email: "superadmin@gmail",
-                nik: "340413450999001",
-                password: "19990909",
-              },
-              {
-                id: "2",
-                nama: "Admin 1",
-                jenis_pengguna: "Admin",
-                email: "admin1@gmail",
-                nik: "340413450999001",
-                password: "19990909",
-              },
-            ],
+            users:[],
           }
     },
     methods: {
@@ -188,7 +171,15 @@ export default {
             wb.SheetNames.forEach((sheetName) => {
               var rowObj =XLSX.utils.sheet_to_json(wb.Sheets[sheetName]);	        
               // this.excelData = JSON.stringify(rowObj)
-              console.log(JSON.stringify(rowObj))
+              var obj = JSON.stringify(rowObj)
+              var dt = JSON.parse(obj);
+              for(var i = 0; i < dt.length; i++){
+                this.users.push({
+                  "nim" : dt[i].nim,
+                  "nama" : dt[i].nama
+                })
+              }
+              console.log(this.users)
             })
           };
           reader.readAsBinaryString(input.files[0]);
