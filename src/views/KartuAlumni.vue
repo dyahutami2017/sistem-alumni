@@ -62,7 +62,6 @@
   </div>
 </template>
 <script>
-
 /* eslint-disable */
 import $ from "jquery";
 import axios from "axios";
@@ -70,6 +69,7 @@ import QRCodeVue3 from "qrcode-vue3";
 import Vue3Barcode from 'vue3-barcode'
 import { jsPDF } from "jspdf";
 import VueHtml2pdf from "vue-html2pdf"
+
 export default {
   name: "kartu-alumni",
   components: {
@@ -136,13 +136,14 @@ export default {
     },
     tracer(){
         axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
-        console.log(res.data);
-        const exp = res.data.expired_date
-        const [year,month,date] = exp.split("-")
-        const result = [date,month,year].join("-")
-        this.kartu.expired_date = result
+        console.log(res.data.tracer_completed);
         if(res.data.tracer_completed == 0){
           this.swalFailed()
+        }else{
+          const exp = res.data.expired_date
+          const [year,month,date] = exp.split("-")
+          const result = [date,month,year].join("-")
+          this.kartu.expired_date = result
         }
       }).catch ((err) => {
         console.log(err);

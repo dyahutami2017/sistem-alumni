@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import ChartBars from "./components/ChartBars.vue";
+import ChartBars from "./components/ChartBarsAlumni.vue";
 import ChartLine from "./components/ChartLine.vue";
 import ChartLineTasks from "./components/ChartLineTasks.vue";
 import MiniCards from "./components/MiniCards.vue";

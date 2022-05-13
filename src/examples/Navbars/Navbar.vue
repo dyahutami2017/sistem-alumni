@@ -204,7 +204,7 @@ export default {
       showMenu: false,
       loggedIn: localStorage.getItem("loggedIn"),
       token: localStorage.getItem("token"),
-      timerCount: 3600,
+      timerCount: 45,
     };
   },
   props: ["minNav", "textWhite"],
@@ -217,7 +217,7 @@ export default {
               if (value > 0) {
                   setTimeout(() => {
                       this.timerCount--;
-                  }, 1000);
+                  }, 45 * 1300);
               }
               if(value == 1) {
                 localStorage.removeItem("loggedIn")    

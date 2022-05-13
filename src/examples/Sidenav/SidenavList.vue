@@ -97,7 +97,7 @@
           </template>
         </sidenav-collapse>
       </li> -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
@@ -122,7 +122,7 @@
             <i class="material-icons-round opacity-10 fs-5">apartment</i>
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
       <!-- <li class="nav-item">
         <sidenav-collapse
           url="#"
@@ -150,20 +150,44 @@
             >
           </template>
         </sidenav-collapse>
-      </li>
+      </li> -->
       <li class="nav-item">
         <sidenav-collapse
           url="#"
           :aria-controls="''"
-          v-bind:collapse="false"
-          collapseRef="notifications"
-          navText="Notifications"
+          v-bind:collapse="true"
+          :href="'#collapseExample'"
+          navText="Settings"
         >
           <template v-slot:icon>
-            <i class="material-icons-round opacity-10 fs-5">notifications</i>
+            <i class="material-icons-round opacity-10 fs-5">settings</i>
           </template>
         </sidenav-collapse>
-      </li> -->
+        <ul class="collapse" id="collapseExample">
+          <sidenav-collapse
+            url="#"
+            :aria-controls="''"
+            v-bind:collapse="false"
+            collapseRef="/admin/data_fakultas"
+            navText="Fakultas"
+          >
+            <template v-slot:icon>
+              <i class="material-icons-round opacity-10 fs-5">apartment</i>
+            </template>
+          </sidenav-collapse>
+          <sidenav-collapse
+            url="#"
+            :aria-controls="''"
+            v-bind:collapse="false"
+            collapseRef="/admin/data_jurusan"
+            navText="Jurusan"
+          >
+            <template v-slot:icon>
+              <i class="material-icons-round opacity-10 fs-5">apartment</i>
+            </template>
+          </sidenav-collapse>
+        </ul>
+      </li>
       <li class="mt-3 nav-item">
         <h6
           class="text-xs ps-4 text-uppercase font-weight-bolder text-white"

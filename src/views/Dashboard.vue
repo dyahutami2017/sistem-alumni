@@ -47,7 +47,7 @@
             <mini-cards
               value="Update Tracer Study"
               iconName="info"
-              :percentage="exp_date"
+              :percentage="date(exp_date)"
               iconClass="text-white"
               iconBackground="bg-gradient-warning"
             />
@@ -95,6 +95,7 @@
 import MiniCards from "./components/MiniCards.vue";
 // import $ from "jquery";
 import axios from "axios";
+import moment from 'moment'
 
 export default {
   name: "dashboard-default",
@@ -109,6 +110,9 @@ export default {
     };
   },
   methods: {
+    date: function (date) {
+      return moment(date).format('DD MMMM YYYY');
+    },
     // load() {
     //       axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
     //       this.tracer = res.data

@@ -58,20 +58,38 @@
             />
           </div>
         </div>
+        <!-- <div class="row mt-4">
+          <div class="col-lg-4 col-md-4 col-sm-12 mt-4">
+            <chart-bars />
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 mt-4">
+            <chart-bars-complete />
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 mt-4">
+            <chart-bars-tracer />
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
   <!-- prettier-ignore -->
 </template>
 <script>
+/* eslint-disable */
 import MiniCards from "./components/MiniCards.vue";
 // import $ from "jquery";
 import axios from "axios";
+import ChartBars from "./components/ChartBarsAlumni.vue";
+import ChartBarsComplete from "./components/ChartBarsComplete.vue";
+import ChartBarsTracer from "./components/ChartBarsTracer.vue";
 
 export default {
   name: "dashboard-default",
   components: {
     MiniCards,
+    ChartBars,
+    ChartBarsComplete,
+    ChartBarsTracer,
   },
   data() {
     return {
@@ -83,9 +101,9 @@ export default {
       alumni_wirausaha: "",
     };
   },
-  methods:{
+  methods: {
     checkData() {
-          axios.get('http://api.alumni.eduraya.co.id/api/dashboard_admin').then(res => {
+      axios.get('http://api.alumni.eduraya.co.id/api/dashboard_admin').then(res => {
           console.log(res.data);
           this.profil_lengkap = res.data.user_completed_count
           this.survey_lengkap = res.data.tracer_completed_count

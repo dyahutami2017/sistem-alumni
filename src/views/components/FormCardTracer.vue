@@ -6,6 +6,7 @@
         <a href="#" class="btn btn-info" id="lanjut_bekerja" style="margin-right: 30px; width: 150px"><i class="fa fa-briefcase"></i> Bekerja</a>
         <a href="#" class="btn btn-info" id="lanjut_study" style="margin-right: 30px; width: 150px"><i class="fa fa-graduation-cap"></i> Studi Lanjut </a>
         <a href="#" class="btn btn-info" id="lanjut_wiraswasta" style="margin-right: 30px; width: 150px"><i class="fa fa-shopping-basket"></i> Wiraswasta </a>
+        <a href="#"  v-on:click="no_work()" class="btn btn-info" id="tidak_kanjut" style="margin-right: 30px; width: 200px"><i class="fa fa-child"></i> Belum Ketiganya</a>
       </div>
       <div id="form_bekerja">
         <div class="row p-4">
@@ -260,7 +261,57 @@
           </div>
         </div>
       </div>
-    
+      <div class="table-responsive p-0">
+        <table class="table align-items-center mb-0">
+          <thead>
+            <tr>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Tracer Study
+              </th>
+              <th
+                class="text-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 p-0"
+              >
+                Update Date
+              </th>
+              <th
+                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+              >
+                Expired Date
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="history in histories" :key="history.id">
+              <td class="align-middle text-center text-sm">
+                <p v-if="history.id == 1" class="text-xs font-weight-bold mb-0">
+                  Bekerja
+                </p>
+                <p v-else-if="history.id == 2" class="text-xs font-weight-bold mb-0">
+                  Melanjutkan
+                </p>
+                <p v-else-if="history.id == 3" class="text-xs font-weight-bold mb-0">
+                  Wirausaha
+                </p>
+                <p v-else class="text-xs font-weight-bold mb-0">
+                  Belum Bekerja
+                </p>
+              </td>
+              <td class="align-middle text-left text-sm">
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ date(history.update_date)}}
+                </p>
+              </td>
+              <td class="align-middle text-center text-sm">
+                <p class="text-xs font-weight-bold mb-0">
+                  {{ date(history.expired_date) }}
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
@@ -273,6 +324,8 @@ import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 import $ from "jquery";
 import axios from "axios";
+import moment from 'moment'
+
 export default {
   name: "form-card-tracer",
   components: {
@@ -315,9 +368,13 @@ export default {
             income: '',
             business_matches: '',
           },
+          histories: [],
       }
   },
   methods: {
+      date: function (date) {
+        return moment(date).format('DD MMMM YYYY');
+      },
       update_bekerja() {
         const url = "http://api.alumni.eduraya.co.id/api/tracer_w/"+ this.$route.params.id;
         axios
@@ -502,6 +559,27 @@ export default {
           console.log(err);
         })
       },
+      load_history(){
+          axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+          this.histories = res.data.tracer_update_history
+          console.log(res.data);
+        }).catch ((err) => {
+          console.log(err);
+        })
+      },
+      no_work() {
+        const url = "http://api.alumni.eduraya.co.id/api/no_work/"+ this.$route.params.id;
+        axios
+          .post(url)
+          .then((response) => {
+            this.swalAlert(response.data.messege, 'Sukses', 'success');
+            this.load_history();
+          })
+          .catch((error) => {
+            console.log(error)            
+              this.swalAlert('Proses Tidak Tersimpan', 'Gagal', 'error');
+          })
+      },
       swalAlert(text,title,icon){
         this.$swal({
           title: title,
@@ -518,6 +596,7 @@ export default {
     this.load();
     this.load_study();
     this.load_usaha();
+    this.load_history();
     setNavPills();
     setTooltip();
     this.$nextTick(() => {
