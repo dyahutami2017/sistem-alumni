@@ -5,7 +5,8 @@
       <div class="col-lg-12 position-relative z-index-2">
         <div class="card">
           <div class="card-body">
-            <a href="#" class="btn btn-primary" id="btnPrint"><i class="fa fa-print"></i> Print Kartu Alumni</a>
+            <a href="#" class="btn btn-primary" id="btnPrint" v-if="printShow" @click="print()"><i class="fa fa-print"></i> Print Kartu Alumni</a>
+            <a href="#" class="btn btn-primary" id="btnPrint" v-else><i class="fa fa-print"></i> Print Kartu Alumni</a>
             <!-- <a href="#" class="btn btn-primary" id="btnDownload" @click="generate()"><i class="fa fa-print"></i> Print Kartu Alumni</a> -->
             <div id="print_kartu" ref="testHtml" style="font-size:18px;" hidden>
               <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
@@ -82,9 +83,11 @@ export default {
       gagal: '',
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
+      printShow: null,
       role: "user",
       val: "",
       src: "",
+      validate: "",
       kartu: {
         name: '',
         birth_place: '',
@@ -128,7 +131,15 @@ export default {
         const [year_g,month_g,date_g] = graduate.split("-")
         const result_graduate = [date_g,month_g,year_g].join("-")
         this.kartu.graduate_year = result_graduate
-
+        this.validate = res.data.user.validated
+        if(this.validate != 1){
+          this.swalNotValidate();
+          this.printShow = false
+        }
+        else{
+          this.printShow = true
+        }
+        document.getElementById('btnPrint').disabled = true;
         console.log(res.data)
       }).catch ((err) => {
         console.log(err);
@@ -136,8 +147,8 @@ export default {
     },
     tracer(){
         axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
-        console.log(res.data.tracer_completed);
-        if(res.data.tracer_completed == 0){
+        console.log(this.validate);
+        if(res.data.tracer_completed == 0 && res.data.profile_completed == 0){
           this.swalFailed()
         }else{
           const exp = res.data.expired_date
@@ -164,6 +175,17 @@ export default {
         }
       })
     },
+    swalNotValidate(){
+      this.$swal({
+        title: 'Oops Maaf',
+        text: "Data anda belum valid, mohon hubungi admin IKA UNS",
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      })
+    },
     generate(){
       this.$refs.testHtml.generatePdf()
       // console.log(document.getElementById("print_kartu").innerHTML);
@@ -179,13 +201,7 @@ export default {
       // });
       
     },
-  },
-  beforeMount(){
-    this.load();
-    this.tracer();
-  },
-  mounted: function () {
-    $("#btnPrint").click(function() {
+    print(){
       var contents = $("#print_kartu").html();
       var frame1 = $('<iframe />');
       frame1[0].name = "frame1";
@@ -221,7 +237,13 @@ export default {
         window.frames["frame1"].print();
         frame1.remove();
       }, 500);
-    }); 
+    }
+  },
+  beforeMount(){
+    this.load();
+    this.tracer();
+  },
+  mounted: function () {
     // $("#btnDownload").click(function() {  
     //   var doc = new jsPDF("p", "mm", "a4");
 

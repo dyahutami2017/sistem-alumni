@@ -52,6 +52,26 @@
               iconBackground="bg-gradient-warning"
             />
           </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <mini-cards
+              v-if="validasi === 'ya'"
+              value="Info Validasi"
+              iconName="check"
+              textCap="text-success text-sm font-weight-bolder"
+              percentage="Data Anda Sudah Tervalidasi"
+              iconClass="text-white"
+              iconBackground="bg-gradient-success"
+            />
+            <mini-cards
+              v-else
+              value="Info Validasi"
+              iconName="check"
+              textCap="text-danger text-sm font-weight-bolder"
+              percentage="Data Anda Belum Tervalidasi"
+              iconClass="text-white"
+              iconBackground="bg-gradient-primary"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -107,23 +127,13 @@ export default {
       profil_lengkap: "",
       survey_lengkap: "",
       exp_date: "",
+      validasi: ""
     };
   },
   methods: {
     date: function (date) {
       return moment(date).format('DD MMMM YYYY');
     },
-    // load() {
-    //       axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
-    //       this.tracer = res.data
-    //       console.log(res.data);
-    //       this.exp_date = res.data.tracer_study.created_at;          
-    //       this.survey_lengkap = "ya";          
-    //     }).catch ((err) => {
-    //       console.log(err);
-    //       this.survey_lengkap = "tidak";          
-    //     })
-    //   },
     checkData() {
           axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
           console.log(res.data);
@@ -149,9 +159,22 @@ export default {
           console.log(err);
         })
       },
+    load(){
+        axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          console.log(res);
+          if(res.data.user.validated != 1){
+            this.validasi = 'tidak'
+          }
+          else{
+            this.validasi = 'ya'
+          }
+      }).catch ((err) => {
+        console.log(err);
+      })
+    },
   },
   mounted() {
-    // this.load();
+    this.load();
     this.checkData();
     // window.location.href = "/form_profile";
     // $("#modalDokumen").addClass("show");

@@ -157,7 +157,10 @@ export default {
   },
   methods: {
     login() {
-      if (this.form.username && this.form.password) {
+      if(this.form.username == '' || this.form.password == ''){
+        this.loginFailed = true
+      }
+      else if (this.form.username && this.form.password) {
           axios.get('http://api.alumni.eduraya.co.id/sanctum/csrf-cookie')
             .then(response => {
               console.log(response)
@@ -181,7 +184,7 @@ export default {
                   }
               }).catch(error => {
                   console.log(error)
-                  this.dataKosong = true
+                  this.loginFailed = true
               })
           })
       }

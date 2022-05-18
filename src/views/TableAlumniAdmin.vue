@@ -17,7 +17,7 @@
                   @change="previewFiles"
                 /> -->
                 <input
-                  class="btn btn-primary btn-sm mb-1"
+                  class="btn btn-light btn-sm mb-1 text-info"
                   target=""
                   style="float: right; margin-right: 10px"
                   type="file"
@@ -355,7 +355,7 @@
                       >
                         <i class="fa fa-user"></i>
                       </a>
-                      <a
+                      <!-- <a
                         href="javascript:;"
                         class="badge bg-gradient-info"
                         data-toggle="tooltip"
@@ -363,7 +363,7 @@
                         style="margin-right:5px"
                       >
                         <i class="fa fa-pencil"></i>
-                      </a>
+                      </a> -->
                       <a
                         href="#"
                         @click="hapus(alumni)"
@@ -496,37 +496,49 @@ export default {
         reader.readAsBinaryString(input.files[0]);
       },
       uploadFiles() {
-        let self = this;
-        self.profil = self.$refs.files.files[0];
-        if (self.$refs.files.files[0]) {
-          var reader = new FileReader();
-          reader.onload = (e) => {
-            console.log(self.profil)
-            // this.preview_ijazah = e.target.result;
-          }
-          reader.readAsDataURL(self.$refs.files.files[0]);
-        }
-        let formData = new FormData();
-        formData.append('file', self.profil);
-        const url = "http://api.alumni.eduraya.co.id/api/import/";
-        axios
-          .post(url, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-          .then(function (response) {
-            console.log(response)
-            self.swalAlert(response.data.messege, 'Sukses', 'success')
-            location.reload();
-          }).catch(error => {
-            console.log(error)
-            var obj = JSON.stringify(error.response.data)
-            var dt = JSON.parse(obj);
-            if(dt.file != undefined){
-              this.swalAlert(dt.file, 'Gagal', 'error');
+        this.$swal({
+          title: 'Perhatian',
+          text: "Apakah anda yakin ingin mengimport file ?",
+          icon: 'warning',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            let self = this;
+            self.profil = self.$refs.files.files[0];
+            if (self.$refs.files.files[0]) {
+              var reader = new FileReader();
+              reader.onload = (e) => {
+                console.log(self.profil)
+                // this.preview_ijazah = e.target.result;
+              }
+              reader.readAsDataURL(self.$refs.files.files[0]);
             }
-          })
+            let formData = new FormData();
+            formData.append('file', self.profil);
+            const url = "http://api.alumni.eduraya.co.id/api/import/";
+            axios
+              .post(url, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+              .then(function (response) {
+                console.log(response)
+                self.swalAlert(response.data.messege, 'Sukses', 'success')
+                location.reload();
+              }).catch(error => {
+                console.log(error)
+                var obj = JSON.stringify(error.response.data)
+                var dt = JSON.parse(obj);
+                if(dt.file != undefined){
+                  this.swalAlert(dt.file, 'Gagal', 'error');
+                }
+              })
+          }
+        })
       },
 
     },

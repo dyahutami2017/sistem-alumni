@@ -2,6 +2,11 @@
 <template>
   <div class="card">
     <div class="card-body px-0 pb-2">
+        <button class="btn btn-info btn-sm mb-2" id="div_loading" v-if="loadingOn === 'ya'" type="button" disabled>
+          <div class="spinner-grow text-warning" role="status"></div>
+          <div class="spinner-grow text-warning" role="status"></div>
+          <div class="spinner-grow text-warning" role="status"></div>
+        </button>
       <form v-on:submit.prevent="submit">
         <div class="row p-4">
           <div class="col-lg-2 col-sm-4 mb-3">
@@ -73,7 +78,7 @@
             <div class="input-group input-group-outline mb-3">
               <label class="label col-12">Fakultas</label><br/>
               <div class="col-12">
-                  <Select2 v-model="profil.faculty" :options="myOptions" />
+                  <Select2 v-model="profil.faculty" :options="myOptions" @select="mySelectEvent($event)"/>
               </div>
             </div>
           </div>
@@ -216,6 +221,7 @@ export default {
   },
   data() {
       return {
+          loadingOn: '',
           src: '',
           photo_url: '',
           ktp_url: '',
@@ -259,7 +265,7 @@ export default {
   mounted() {
     this.load();
     this.load_faculty();
-    this.load_departement();
+    // this.load_departement();
   },
   methods: {
     load(){
@@ -324,19 +330,19 @@ export default {
         console.log(err);
       })
     },
-    load_departement(){
-        axios.get('http://api.alumni.eduraya.co.id/api/departement').then(res => {
-          console.log(res.data.Departement)
-          for(var i=0; i < res.data.Departement.length; i++){
-            this.myOptions2.push({
-              "id" : res.data.Departement[i].id,
-              "text" : res.data.Departement[i].departement_name
-            })
-          }
-      }).catch ((err) => {
-        console.log(err);
-      })
-    },
+    mySelectEvent({id}){
+        axios.get('http://api.alumni.eduraya.co.id/api/list_departement/' + id).then(res => {
+            console.log(res.data.Departement)
+            for(var i=0; i < res.data.Departement.length; i++){
+              this.myOptions2.push({
+                "id" : res.data.Departement[i].id,
+                "text" : res.data.Departement[i].departement_name
+              })
+            }
+        }).catch ((err) => {
+          console.log(err);
+        })
+    },   
     uploadPhoto() {
       self.profil.photo = self.$refs.file.files[0];
       console.log(self.profil.photo);
@@ -371,6 +377,7 @@ export default {
       }
     },
     submit(){
+      this.loadingOn = 'ya';
       // this.$emit('save-profil', this.profil)
       // const url = "http://api.alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
       // axios
@@ -403,7 +410,8 @@ export default {
       formData.append('achievement', self.profil.achievement);
       formData.append('nim', self.profil.nim);
       formData.append('_method', 'POST')
-      console.log(self.profil.photo);
+      console.log(self.profil.departement);
+      console.log(self.profil.faculty);
       const url = "http://api.alumni.eduraya.co.id/api/profile/"+self.$route.params.id;
       axios
         .post(url, formData, {
@@ -411,7 +419,7 @@ export default {
                   'Content-Type': 'multipart/form-data'
               }
           })
-        .then(function (response) {
+        .then((response) => {
           console.log(response)
           self.$swal({
             title: 'Sukses',
@@ -423,6 +431,7 @@ export default {
             confirmButtonText: 'OK'
           }).then((result) => {
             if (result.isConfirmed) {
+              this.loadingOn = ''
               location.reload();
             }
           })
@@ -497,8 +506,9 @@ export default {
             this.swalAlert(dt.bachelor_certificate, 'Gagal', 'error');
           }
           else{
-            this.swalAlert(dt)
+            this.swalAlert('Maaf Proses Anda Gagal !', 'Gagal', 'error')
           }
+          this.loadingOn = ''
         });
     },
     swalAlert(text,title,icon){
@@ -519,4 +529,18 @@ export default {
 .select2 {
   width:100%!important;
 }
+#div_loading {
+    width: 300px;
+    height: 200px;
+    line-height: 200px;
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -150px;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 1000; /* 1px higher than the overlay layer */
+}
+
 </style>
