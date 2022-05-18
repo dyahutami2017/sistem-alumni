@@ -23,7 +23,7 @@
                 <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.birth_place}}, {{kartu.birth_date}}
               </div>
               <div class="top-fifth text-dark">
-                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.faculty}}, {{kartu.departement}} -  S1
+                <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.faculty}}, {{kartu.departement}}
               </div>
               <div class="top-sixth text-dark">
                 <span style="display:inline-block;  width:80px; text-align:left"></span>{{kartu.graduate_year}}
@@ -117,8 +117,8 @@ export default {
         this.kartu.email = res.data.user.email
         this.kartu.nik = res.data.user.nik
         this.kartu.nim = res.data.user.nim
-        this.kartu.faculty = res.data.user.faculty
-        this.kartu.departement = res.data.user.departement
+        this.kartu.faculty = res.data.user.faculty_name
+        this.kartu.departement = res.data.user.departement_name
         this.kartu.photo = res.data.user.photo_url
         this.val = res.data.user.nik
         //tgl lahir
