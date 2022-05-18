@@ -394,11 +394,11 @@ export default {
       formData.append('address', self.profil.address);
       formData.append('birth_date', self.profil.birth_date);
       formData.append('birth_place', self.profil.birth_place);
-      formData.append('departement', self.profil.departement);
+      formData.append('departement_id', self.profil.departement);
       formData.append('diploma_number', self.profil.diploma_number);
       formData.append('email', self.profil.email);
       formData.append('entry_year', self.profil.entry_year);
-      formData.append('faculty', self.profil.faculty);
+      formData.append('faculty_id', self.profil.faculty);
       formData.append('gpa', self.profil.gpa);
       formData.append('graduate_year', self.profil.graduate_year);
       formData.append('name', self.profil.name);
