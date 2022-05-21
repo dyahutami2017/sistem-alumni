@@ -269,7 +269,7 @@ export default {
   },
   methods: {
     load(){
-        axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ self.$route.params.id, 
+        axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ self.$route.params.id, 
         {
           headers: {'Authorization': 'Bearer '+ this.token}
         }
@@ -318,7 +318,7 @@ export default {
       })
     },
     load_faculty(){
-        axios.get('http://api.alumni.eduraya.co.id/api/faculty').then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'faculty').then(res => {
           console.log(res.data.faculty)
           for(var i=0; i < res.data.faculty.length; i++){
             this.myOptions.push({
@@ -331,7 +331,7 @@ export default {
       })
     },
     mySelectEvent({id}){
-        axios.get('http://api.alumni.eduraya.co.id/api/list_departement/' + id).then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'list_departement/' + id).then(res => {
             console.log(res.data.Departement)
             for(var i=0; i < res.data.Departement.length; i++){
               this.myOptions2.push({
@@ -379,7 +379,7 @@ export default {
     submit(){
       this.loadingOn = 'ya';
       // this.$emit('save-profil', this.profil)
-      // const url = "http://api.alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
+      // const url = process.env.VUE_APP_ROOT_API + 'profile/'+this.$route.params.id;
       // axios
       //   .put(url, this.profil)
       //   .then(function (response) {
@@ -412,7 +412,7 @@ export default {
       formData.append('_method', 'POST')
       console.log(self.profil.departement);
       console.log(self.profil.faculty);
-      const url = "http://api.alumni.eduraya.co.id/api/profile/"+self.$route.params.id;
+      const url = process.env.VUE_APP_ROOT_API + 'profile/'+self.$route.params.id;
       axios
         .post(url, formData, {
               headers: {

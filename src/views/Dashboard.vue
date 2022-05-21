@@ -135,7 +135,7 @@ export default {
       return moment(date).format('DD MMMM YYYY');
     },
     checkData() {
-          axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'dashboard/'+ this.$route.params.id).then(res => {
           console.log(res.data);
           if(res.data.profile_completed == 1){
             this.profil_lengkap = 'ya'
@@ -160,7 +160,7 @@ export default {
         })
       },
     load(){
-        axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           console.log(res);
           if(res.data.user.validated != 1){
             this.validasi = 'tidak'

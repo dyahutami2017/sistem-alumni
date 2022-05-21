@@ -5,9 +5,10 @@
       <div class="col-lg-12 position-relative z-index-2">
         <div class="card">
           <div class="card-body">
-            <a href="#" class="btn btn-primary" id="btnPrint" v-if="printShow" @click="print()"><i class="fa fa-print"></i> Print Kartu Alumni</a>
-            <a href="#" class="btn btn-primary" id="btnPrint" v-else><i class="fa fa-print"></i> Print Kartu Alumni</a>
-            <!-- <a href="#" class="btn btn-primary" id="btnDownload" @click="generate()"><i class="fa fa-print"></i> Print Kartu Alumni</a> -->
+            <!-- <a href="#" class="btn btn-primary" id="btnPrint" v-if="printShow" @click="print()"><i class="fa fa-print"></i> Print Kartu Alumni</a> -->
+            <!-- <a href="#" class="btn btn-primary" id="btnPrint" v-else><i class="fa fa-print"></i> Print Kartu Alumni</a> -->
+            <a href="#" class="btn btn-primary" id="btnDownload" v-if="printShow === 'ya'" @click="generate()"><i class="fa fa-print"></i> Print Kartu Alumni</a>
+            <a href="#" class="btn btn-primary" id="btnDownload" v-else><i class="fa fa-print"></i> Print Kartu Alumni</a>
             <div id="print_kartu" ref="testHtml" style="font-size:18px;" hidden>
               <img src="../assets/img/KartuAlumni.png" alt="" id="img_card">
               <div class="top-first text-dark">
@@ -83,7 +84,7 @@ export default {
       gagal: '',
       profil_lengkap: "tidak",
       survey_lengkap: "ya",
-      printShow: null,
+      printShow: '',
       role: "user",
       val: "",
       src: "",
@@ -108,7 +109,7 @@ export default {
   },
   methods: {
     load(){
-        axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
         this.kartu.name = res.data.user.name 
         this.kartu.birth_place = res.data.user.birth_place 
         this.kartu.entry_year = res.data.user.entry_year 
@@ -134,23 +135,36 @@ export default {
         this.validate = res.data.user.validated
         if(this.validate != 1){
           this.swalNotValidate();
-          this.printShow = false
+          this.printShow = 'tidak'
         }
         else{
-          this.printShow = true
+          this.printShow = 'ya'
         }
         document.getElementById('btnPrint').disabled = true;
         console.log(res.data)
       }).catch ((err) => {
         console.log(err);
+        this.$swal({
+          title: 'Dilarang',
+          text: 'Data anda tidak ada',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'OK'
+        })
       })
     },
     tracer(){
-        axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'dashboard/'+ this.$route.params.id).then(res => {
         console.log(this.validate);
-        if(res.data.tracer_completed == 0 && res.data.profile_completed == 0){
-          this.swalFailed()
-        }else{
+        if(res.data.profile_completed == 0){
+          this.swalFailedProfile('Mohon Lengkapi Data Profile!')
+        }
+        else if(res.data.tracer_completed == 0){
+          this.swalFailed('Mohon Lengkapi Data Tracer Study!')
+        }
+        else{
           const exp = res.data.expired_date
           const [year,month,date] = exp.split("-")
           const result = [date,month,year].join("-")
@@ -160,10 +174,10 @@ export default {
         console.log(err);
       })
     },
-    swalFailed(){
+    swalFailed(text){
       this.$swal({
         title: 'Oops Maaf',
-        text: "Mohon Lengkapi Data Tracer Study!",
+        text: text,
         icon: 'warning',
         showCancelButton: false,
         confirmButtonColor: '#3085d6',
@@ -172,6 +186,21 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$router.push('/tracer_study/'+this.$route.params.id);
+        }
+      })
+    },
+    swalFailedProfile(text){
+      this.$swal({
+        title: 'Oops Maaf',
+        text: text,
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'OK'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push('/form_profile/'+this.$route.params.id);
         }
       })
     },
@@ -187,19 +216,18 @@ export default {
       })
     },
     generate(){
-      this.$refs.testHtml.generatePdf()
-      // console.log(document.getElementById("print_kartu").innerHTML);
-      // window.html2canvas = html2canvas;
-      // var doc = new jsPDF('p','pt','a4');
-
-      // doc.html(document.getElementById("print_kartu").innerHTML, {
-      //   callback: function (doc) {
-      //     doc.save();
-      //   },
-      //   x: 10,
-      //   y: 10
-      // });
-      
+      axios({
+          url: 'http://localhost:8000/api/card/1', //your url
+          method: 'GET',
+          responseType: 'blob', // important
+      }).then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'Kartu Alumni.pdf'); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+      });
     },
     print(){
       var contents = $("#print_kartu").html();

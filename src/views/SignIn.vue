@@ -161,10 +161,10 @@ export default {
         this.loginFailed = true
       }
       else if (this.form.username && this.form.password) {
-          axios.get('http://api.alumni.eduraya.co.id/sanctum/csrf-cookie')
+          axios.get('http://localhost:8000/sanctum/csrf-cookie')
             .then(response => {
               console.log(response)
-              axios.post('http://api.alumni.eduraya.co.id/api/login', {
+              axios.post(process.env.VUE_APP_ROOT_API + 'login', {
                   username: this.form.username,
                   password: this.form.password
               }).then(res => {

@@ -236,7 +236,7 @@ export default {
     logout() {
       localStorage.removeItem("loggedIn")    
       return this.$router.push('/sign-in')
-      axios.get('http://api.alumni.eduraya.co.id/api/logout', {headers: {'Authorization': 'Bearer '+ this.token}})
+      axios.get(process.env.VUE_APP_ROOT_API + 'logout', {headers: {'Authorization': 'Bearer '+ this.token}})
         .then(() => {
         })
     }

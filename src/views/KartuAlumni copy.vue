@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           this.kartu.name = res.data.user.name 
           this.kartu.birth_place = res.data.user.birth_place 
           this.kartu.birth_date =  res.data.user.birth_date

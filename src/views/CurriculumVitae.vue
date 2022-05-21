@@ -113,7 +113,7 @@ export default {
   },
   methods: {
     load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           this.cv.name = res.data.user.name 
           this.cv.birth_place = res.data.user.birth_place 
           this.cv.birth_date = res.data.user.birth_date 
@@ -131,7 +131,7 @@ export default {
         })
       },
       checkProfile(){
-        axios.get('http://api.alumni.eduraya.co.id/api/dashboard/'+ this.$route.params.id).then(res => {
+        axios.get(process.env.VUE_APP_ROOT_API + 'dashboard/'+ this.$route.params.id).then(res => {
         console.log(res.data);
         if(res.data.profile_completed == 0){
           this.$swal({

@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     checkData() {
-      axios.get('http://api.alumni.eduraya.co.id/api/dashboard_admin').then(res => {
+      axios.get(process.env.VUE_APP_ROOT_API + 'dashboard_admin').then(res => {
           console.log(res.data);
           this.profil_lengkap = res.data.user_completed_count
           this.survey_lengkap = res.data.tracer_completed_count

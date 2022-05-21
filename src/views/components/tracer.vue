@@ -229,7 +229,7 @@ export default {
     },
     methods: {
       load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           this.profil.name = res.data.user.name 
           this.profil.nim = res.data.user.nim 
           this.profil.nik = res.data.user.nik 
@@ -289,7 +289,7 @@ export default {
         // formData.append('phone_number', this.profil.phone_number);
         // formData.append('social_media', this.profil.social_media);
         console.log(this.profil.photo);
-        // const url = "http://api.alumni.eduraya.co.id/api/profile/"+this.$route.params.id;
+        // const url = process.env.VUE_APP_ROOT_API + 'profile/'+this.$route.params.id;
         // axios
         //   .put(url, formData, {
         //         headers: {

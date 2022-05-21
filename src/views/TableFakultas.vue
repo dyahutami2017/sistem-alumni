@@ -164,7 +164,7 @@ export default {
     },
     methods: {
       load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/faculty').then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'faculty').then(res => {
             console.log(res.data.faculty)
             this.faculties = res.data.faculty
         }).catch ((err) => {
@@ -172,7 +172,7 @@ export default {
         })
       },
       add(){
-        const url = "http://api.alumni.eduraya.co.id/api/faculty";
+        const url = process.env.VUE_APP_ROOT_API + 'faculty';
         axios
           .post(url, this.form)
           .then(response => {
@@ -205,7 +205,7 @@ export default {
         this.form.faculty_name = faculty.faculty_name 
       },
       update(form){ 
-        return axios.put('http://api.alumni.eduraya.co.id/api/faculty/' + form.id , this.form).then(response => {
+        return axios.put(process.env.VUE_APP_ROOT_API + 'faculty/' + form.id , this.form).then(response => {
           this.load()
           this.updateSubmit = false
           this.swalAlert(response.data.messege,'Sukses','success')
@@ -215,7 +215,7 @@ export default {
         })
       },
       deleteFaculty(id){
-        axios.delete('http://api.alumni.eduraya.co.id/api/faculty/' + id).then(response =>{
+        axios.delete(process.env.VUE_APP_ROOT_API + 'faculty/' + id).then(response =>{
             this.load()
             let index = this.faculty.indexOf(form.code)
             this.faculties.splice(index,1)

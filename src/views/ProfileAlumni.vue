@@ -158,13 +158,13 @@
                     <tr>
                       <td width="200px">Tahun Masuk</td>
                       <td>
-                        <strong class="text-dark">{{request.entry_year}}</strong>
+                        <strong class="text-dark">{{date(request.entry_year)}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Tahun Lulus</td>
                       <td>
-                        <strong class="text-dark">{{request.graduate_year}}</strong>
+                        <strong class="text-dark">{{date(request.graduate_year)}}</strong>
                       </td>
                     </tr>
                     <tr>
@@ -214,6 +214,7 @@ import $ from "jquery";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 import axios from "axios";
+import moment from 'moment'
 let ket_caption;
 export default {
   name: "profile-alumni",
@@ -258,8 +259,11 @@ export default {
   },
   components: {},
   methods: {
+    date: function (date) {
+      return moment(date).format('DD MMMM YYYY');
+    },
     load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           this.request.name = res.data.user.name 
           this.request.nim = res.data.user.nim 
           this.request.nik = res.data.user.nik 
@@ -270,8 +274,8 @@ export default {
           this.request.phone_number = res.data.user.phone_number 
           this.request.address = res.data.user.address 
           this.request.email = res.data.user.email
-          this.request.faculty = res.data.user.faculty
-          this.request.departement = res.data.user.departement
+          this.request.faculty = res.data.user.faculty_name
+          this.request.departement = res.data.user.departement_name
           this.request.gender = res.data.user.gender
           this.request.photo = res.data.user.photo_url
           this.link = '/form_profile/'+res.data.user.id
@@ -302,7 +306,7 @@ export default {
       },
       valid(){
         axios
-          .put('http://api.alumni.eduraya.co.id/api/validate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
+          .put(process.env.VUE_APP_ROOT_API + 'validate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
             console.log(res.data.user)
             $(".btnValid").hide();
             $(".btnUnvalid").show()
@@ -314,7 +318,7 @@ export default {
       },
       tdkValid(){
         axios
-          .put('http://api.alumni.eduraya.co.id/api/unvalidate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
+          .put(process.env.VUE_APP_ROOT_API + 'unvalidate/'+ this.$route.params.id, {validated: this.validasi}).then(res => {
             console.log(res.data)
             $(".btnUnvalid").hide();
             $(".btnValid").show();

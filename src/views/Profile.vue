@@ -154,13 +154,13 @@
                     <tr>
                       <td width="200px">Tahun Masuk</td>
                       <td>
-                        <strong class="text-dark">{{request.entry_year}}</strong>
+                        <strong class="text-dark">{{date(request.entry_year)}}</strong>
                       </td>
                     </tr>
                     <tr>
                       <td width="200px">Tahun Lulus</td>
                       <td>
-                        <strong class="text-dark">{{request.graduate_year}}</strong>
+                        <strong class="text-dark">{{date(request.graduate_year)}}</strong>
                       </td>
                     </tr>
                   </table>
@@ -203,7 +203,7 @@ import $ from "jquery";
 import setNavPills from "@/assets/js/nav-pills.js";
 import setTooltip from "@/assets/js/tooltip.js";
 import axios from "axios";
-
+import moment from 'moment'
 export default {
   name: "profile-overview",
   data() {
@@ -247,8 +247,11 @@ export default {
   },
   components: {},
   methods: {
+    date: function (date) {
+      return moment(date).format('DD MMMM YYYY');
+    },
     load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/profile/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'profile/'+ this.$route.params.id).then(res => {
           this.request.name = res.data.user.name 
           this.request.nim = res.data.user.nim 
           this.request.nik = res.data.user.nik 
@@ -259,8 +262,8 @@ export default {
           this.request.phone_number = res.data.user.phone_number 
           this.request.address = res.data.user.address 
           this.request.email = res.data.user.email
-          this.request.faculty = res.data.user.faculty
-          this.request.departement = res.data.user.departement
+          this.request.faculty = res.data.user.faculty_name
+          this.request.departement = res.data.user.departement_name
           this.request.gender = res.data.user.gender
           this.request.ktp = res.data.user.identity_card_url
           this.request.ijazah = res.data.user.bachelor_certificate_url

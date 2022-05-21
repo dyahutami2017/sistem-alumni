@@ -165,7 +165,7 @@ export default {
     },
     methods: {
       load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/departement').then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'departement').then(res => {
             console.log(res.data.Departement)
             this.departements = res.data.Departement
         }).catch ((err) => {
@@ -173,7 +173,7 @@ export default {
         });
       },
       load_faculty(){
-          axios.get('http://api.alumni.eduraya.co.id/api/faculty').then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'faculty').then(res => {
             console.log(res.data.faculty)
             for(var i=0; i < res.data.faculty.length; i++){
               this.faculties.push({
@@ -189,7 +189,7 @@ export default {
           console.log({id, text})
       },
       add(){
-        const url = "http://api.alumni.eduraya.co.id/api/departement";
+        const url = process.env.VUE_APP_ROOT_API + 'departement';
         axios
           .post(url, this.form)
           .then(response => {
@@ -222,7 +222,7 @@ export default {
         this.form.faculty_id =  id_faculty.toString()
       },
       update(form){ 
-        return axios.put('http://api.alumni.eduraya.co.id/api/departement/' + form.id , this.form).then(response => {
+        return axios.put(process.env.VUE_APP_ROOT_API + 'departement/' + form.id , this.form).then(response => {
           this.load()
           this.updateSubmit = false
           this.swalAlert(response.data.messege,'Sukses','success')
@@ -240,7 +240,7 @@ export default {
         })
       },
       deleteDepartement(id){
-        axios.delete('http://api.alumni.eduraya.co.id/api/departement/' + id).then(response =>{
+        axios.delete(process.env.VUE_APP_ROOT_API + 'departement/' + id).then(response =>{
             this.load()
             this.swalAlert(response.data.messege,'Sukses','success')
         }).catch(error => {

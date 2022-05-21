@@ -31,7 +31,7 @@ export default {
     
   },
   mounted() {
-    axios.get('http://api.alumni.eduraya.co.id/api/faculty').then(res => {
+    axios.get(process.env.VUE_APP_ROOT_API + 'faculty').then(res => {
           for(var i=0; i < res.data.faculty.length; i++){
             alumniData.labels.push(
                res.data.faculty[i].faculty_name

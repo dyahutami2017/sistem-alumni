@@ -417,7 +417,7 @@ export default {
     },
     methods: {
         load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/alumni').then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'alumni').then(res => {
             this.alumnis = res.data.user
         }).catch ((err) => {
           console.log(err);
@@ -427,7 +427,7 @@ export default {
         this.$router.push('/admin/profile_alumni/'+alumni.id);
       },
       hapus(alumni){ 
-        axios.delete('http://api.alumni.eduraya.co.id/api/alumni/'+alumni.id).then(res => {
+        axios.delete(process.env.VUE_APP_ROOT_API + 'alumni/'+alumni.id).then(res => {
             console.log(res.data)
             this.load()
             let index = this.alumnis.indexOf(alumni.id)
@@ -482,7 +482,7 @@ export default {
               })
             }
             console.log(this.profil)
-            const url = "http://api.alumni.eduraya.co.id/api/alumni/";
+            const url = process.env.VUE_APP_ROOT_API + 'alumni/';
             axios
             .post(url, this.profil)
             .then((response) => {
@@ -518,7 +518,7 @@ export default {
             }
             let formData = new FormData();
             formData.append('file', self.profil);
-            const url = "http://api.alumni.eduraya.co.id/api/import/";
+            const url = process.env.VUE_APP_ROOT_API + 'import/';
             axios
               .post(url, formData, {
                     headers: {

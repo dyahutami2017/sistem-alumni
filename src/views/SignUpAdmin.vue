@@ -147,7 +147,7 @@ export default {
   },
   methods: {
     add() {
-      const url = "http://api.alumni.eduraya.co.id/api/register";
+      const url = process.env.VUE_APP_ROOT_API + "register";
       let self = this;
       axios
         .post(url, this.register)

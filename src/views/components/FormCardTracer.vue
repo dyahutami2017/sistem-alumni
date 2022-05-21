@@ -376,7 +376,7 @@ export default {
         return moment(date).format('DD MMMM YYYY');
       },
       update_bekerja() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_w/"+ this.$route.params.id;
+        const url = process.env.VUE_APP_ROOT_API + 'tracer_w/'+ this.$route.params.id;
         axios
           .post(url, this.tracer_w)
           .then((response) => {
@@ -419,7 +419,7 @@ export default {
           })
       },
       load(){
-          axios.get('http://api.alumni.eduraya.co.id/api/tracer_w/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'tracer_w/'+ this.$route.params.id).then(res => {
           this.tracer_w = res.data
           console.log(res.data);
           this.tracer_w.company_name = res.data.tracer_work.company_name 
@@ -441,7 +441,7 @@ export default {
         })
       },
       update_study() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_s/"+ this.$route.params.id;
+        const url = process.env.VUE_APP_ROOT_API + 'tracer_s/'+ this.$route.params.id;
         axios
           .put(url, this.tracer_s)
           .then((response) => {
@@ -478,7 +478,7 @@ export default {
           });
       },
       load_study(){
-          axios.get('http://api.alumni.eduraya.co.id/api/tracer_s/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'tracer_s/'+ this.$route.params.id).then(res => {
           this.tracer_s = res.data
           console.log(res.data);
           this.tracer_s.university_name = res.data.tracer_study.university_name 
@@ -498,7 +498,7 @@ export default {
         })
       },
       update_usaha() {
-        const url = "http://api.alumni.eduraya.co.id/api/tracer_e/"+ this.$route.params.id;
+        const url = process.env.VUE_APP_ROOT_API + 'tracer_e/'+ this.$route.params.id;
         axios
           .put(url, this.tracer_e)
           .then((response) => {
@@ -539,7 +539,7 @@ export default {
           });
       },
       load_usaha(){
-          axios.get('http://api.alumni.eduraya.co.id/api/tracer_e/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'tracer_e/'+ this.$route.params.id).then(res => {
           this.tracer_e = res.data
           console.log(res.data);
           this.tracer_e.business_name = res.data.tracer_entrepreneur.business_name 
@@ -560,7 +560,7 @@ export default {
         })
       },
       load_history(){
-          axios.get('http://api.alumni.eduraya.co.id/api/tracer/'+ this.$route.params.id).then(res => {
+          axios.get(process.env.VUE_APP_ROOT_API + 'tracer/'+ this.$route.params.id).then(res => {
           this.histories = res.data.tracer_update_history
           console.log(res.data);
         }).catch ((err) => {
@@ -568,7 +568,7 @@ export default {
         })
       },
       no_work() {
-        const url = "http://api.alumni.eduraya.co.id/api/no_work/"+ this.$route.params.id;
+        const url = process.env.VUE_APP_ROOT_API + 'no_work/'+ this.$route.params.id;
         axios
           .post(url)
           .then((response) => {
